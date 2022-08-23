@@ -203,39 +203,39 @@
                 this.participationPercentText.set("Value", viewParticipationPercent);
             },
 
-            _setViewTestDurationAttr: function (viewTestDuration) {
-                this.durationText.set("Value", viewTestDuration);
-            },
+            //_setViewTestDurationAttr: function (viewTestDuration) {
+            //    this.durationText.set("Value", viewTestDuration);
+            //},
 
-            _setViewConfidenceLevelAttr: function () {
-                var rbs = [
-                    { val: 99, label: "99%" },
-                    { val: 98, label: "98%" },
-                    { val: 95, label: "95%" },
-                    { val: 90, label: "90%" }
-                ];
-                var confidenceSelectWidget = registry.byId("confidence"), selectOption, defaultOption;
-                dijit.byId('confidence').removeOption(dijit.byId('confidence').getOptions());
-                if (confidenceSelectWidget) {
-                    for (var i = 0; i < rbs.length; i++) {
-                        if (rbs[i].val === this.model.confidenceLevel) {
-                            selectOption = { value: rbs[i].val, label: rbs[i].label + " (Default)" };
-                            confidenceSelectWidget.addOption(selectOption);
-                            defaultOption = rbs[i].val;
-                        } else {
-                            selectOption = { value: rbs[i].val, label: rbs[i].label };
-                            confidenceSelectWidget.addOption(selectOption);
-                        }
-                        confidenceSelectWidget.setValue(defaultOption);
-                    }
-                }
-            },
+            //_setViewConfidenceLevelAttr: function () {
+            //    var rbs = [
+            //        { val: 99, label: "99%" },
+            //        { val: 98, label: "98%" },
+            //        { val: 95, label: "95%" },
+            //        { val: 90, label: "90%" }
+            //    ];
+            //    var confidenceSelectWidget = registry.byId("confidence"), selectOption, defaultOption;
+            //    dijit.byId('confidence').removeOption(dijit.byId('confidence').getOptions());
+            //    if (confidenceSelectWidget) {
+            //        for (var i = 0; i < rbs.length; i++) {
+            //            if (rbs[i].val === this.model.confidenceLevel) {
+            //                selectOption = { value: rbs[i].val, label: rbs[i].label + " (Default)" };
+            //                confidenceSelectWidget.addOption(selectOption);
+            //                defaultOption = rbs[i].val;
+            //            } else {
+            //                selectOption = { value: rbs[i].val, label: rbs[i].label };
+            //                confidenceSelectWidget.addOption(selectOption);
+            //            }
+            //            confidenceSelectWidget.setValue(defaultOption);
+            //        }
+            //    }
+            //},
 
-            // DATA GETTERS
-            _getConfidenceLevel: function () {
-                var confidenceSelectWidget = dijit.byId("confidence");
-                return confidenceSelectWidget.value;
-            },
+            //// DATA GETTERS
+            //_getConfidenceLevel: function () {
+            //    var confidenceSelectWidget = dijit.byId("confidence");
+            //    return confidenceSelectWidget.value;
+            //},
 
             // Transforms custom KPI form data into json for processing
             _getKpiFormData: function () {
@@ -291,7 +291,7 @@
             // errors not triggered by onChangeEvents.
             _isValidFormData: function () {
                 return this._isValidPercentParticipation() &
-                    this._isValidDuration() &
+                    //this._isValidDuration() &
                     this._isValidStartDate();
             },
 
@@ -426,7 +426,7 @@
                     dojo.style(advancedOptionsElement, "display", "none");
                 }
 
-                this._setViewConfidenceLevelAttr();
+                //this._setViewConfidenceLevelAttr();
                 this._clearErrors();
                 this._clearCustomKpiMarkup();
                 this._clearKpiWeightWidgets();
@@ -513,18 +513,18 @@
             },
 
             // UI UTILITIES
-            _toggleTimeSelector: function () {
-                var dateSelector = dom.byId("dateSelector");
+            //_toggleTimeSelector: function () {
+            //    var dateSelector = dom.byId("dateSelector");
 
-                if (dateSelector.style.visibility === "hidden") {
-                    dateSelector.style.visibility = "visible";
-                } else {
-                    this.startDatePicker.reset();
-                    dateSelector.style.visibility = "hidden";
-                    this.startDatePicker.reset();
-                    this._setError(null, dom.byId("datePickerErrorIcon"), dom.byId("datePickerErrorText"))
-                }
-            },
+            //    if (dateSelector.style.visibility === "hidden") {
+            //        dateSelector.style.visibility = "visible";
+            //    } else {
+            //        this.startDatePicker.reset();
+            //        dateSelector.style.visibility = "hidden";
+            //        this.startDatePicker.reset();
+            //        this._setError(null, dom.byId("datePickerErrorIcon"), dom.byId("datePickerErrorText"))
+            //    }
+            //},
 
             //Toggles an errors text content and icon visibitlity based on the error and nodes supplied
             _setError: function (errorText, errorNode, iconNode) {
@@ -553,7 +553,7 @@
                     this.model.startDate = utcNow;
                 }
 
-                this.model.confidencelevel = this._getConfidenceLevel();
+                this.model.confidencelevel = 99; //this._getConfidenceLevel();
                 this.model.testTitle = me.pageName.textContent;
 
                 this.kpiFormData = this._getKpiFormData();
@@ -695,35 +695,35 @@
             },
 
             _onDurationSpinnerChanged: function (event) {
-                if (this._isValidDuration()) {
-                    this.model.testDuration = event;
-                }
+                //if (this._isValidDuration()) {
+                //    this.model.testDuration = event;
+                //}
             },
 
-            _onDateTimeChange: function (event) {
-                var startButton = registry.byId("StartButton");
-                var scheduleText = dom.byId("ScheduleText");
-                var startDateSelector = dom.byId("StartDateTimeSelector");
+            //_onDateTimeChange: function (event) {
+            //    var startButton = registry.byId("StartButton");
+            //    var scheduleText = dom.byId("ScheduleText");
+            //    var startDateSelector = dom.byId("StartDateTimeSelector");
 
-                if (event === null) {
-                    event = startDateSelector.value;
-                }
+            //    if (event === null) {
+            //        event = startDateSelector.value;
+            //    }
 
-                if (this._isValidStartDate(event)) {
-                    if (event !== "") {
-                        var dojoLocale = dojo.locale;
-                        var localDate = new Date(event).toLocaleString(dojoLocale);
-                        startButton.set("label", resources.addtestview.schedule_test);
-                        scheduleText.innerText = resources.addtestview.schedule_tobegin_on + localDate;
-                        this.model.startDate = new Date(event).toUTCString();
-                        this.model.start = false;
-                    } else {
-                        startButton.set("label", resources.addtestview.start_default);
-                        scheduleText.innerText = resources.addtestview.notscheduled_text;
-                        this.model.start = true;
-                    }
-                }
-            },
+            //    if (this._isValidStartDate(event)) {
+            //        if (event !== "") {
+            //            var dojoLocale = dojo.locale;
+            //            var localDate = new Date(event).toLocaleString(dojoLocale);
+            //            startButton.set("label", resources.addtestview.schedule_test);
+            //            scheduleText.innerText = resources.addtestview.schedule_tobegin_on + localDate;
+            //            this.model.startDate = new Date(event).toUTCString();
+            //            this.model.start = false;
+            //        } else {
+            //            startButton.set("label", resources.addtestview.start_default);
+            //            scheduleText.innerText = resources.addtestview.notscheduled_text;
+            //            this.model.start = true;
+            //        }
+            //    }
+            //},
 
             _adjustKpiSelectorCombo: function (kpiId) {
                 var dijitSelector = dijit.byId("kpiSelector");
@@ -751,19 +751,19 @@
                 }
             },
 
-            _showAdvancedOptions: function (evt) {
-                var advancedOptionsElement = dom.byId("advancedOptions");
-                if (dojo.style(advancedOptionsElement, "display") == "none") {
-                    dojo.style(advancedOptionsElement, "display", "block");
-                    advancedOptionsElement.scrollIntoView(true);
-                }
-                else {
-                    if (evt.currentTarget.id == "advancedOptionsLink") {
-                        advancedOptionsElement.scrollIntoView(true);
-                    } else {
-                        dojo.style(advancedOptionsElement, "display", "none");
-                    }
-                }
-            }
+            //_showAdvancedOptions: function (evt) {
+            //    var advancedOptionsElement = dom.byId("advancedOptions");
+            //    if (dojo.style(advancedOptionsElement, "display") == "none") {
+            //        dojo.style(advancedOptionsElement, "display", "block");
+            //        advancedOptionsElement.scrollIntoView(true);
+            //    }
+            //    else {
+            //        if (evt.currentTarget.id == "advancedOptionsLink") {
+            //            advancedOptionsElement.scrollIntoView(true);
+            //        } else {
+            //            dojo.style(advancedOptionsElement, "display", "none");
+            //        }
+            //    }
+            //}
         });
     });
