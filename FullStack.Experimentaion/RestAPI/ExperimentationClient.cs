@@ -287,7 +287,7 @@ namespace FullStack.Experimentaion.RestAPI
         }
 
 
-        public bool CreateOrUpdateFlagRuleSet(List<OptiFlagRulesSet> optiFlagRuleSet)
+        public bool CreateFlagRuleSet(List<OptiFlagRulesSet> optiFlagRuleSet)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {

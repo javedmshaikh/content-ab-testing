@@ -290,9 +290,9 @@
             // Master validations for all form fields. Used when hitting the start button and will pickup
             // errors not triggered by onChangeEvents.
             _isValidFormData: function () {
-                return this._isValidPercentParticipation() &
+                return this._isValidPercentParticipation(); //&
                     //this._isValidDuration() &
-                    this._isValidStartDate();
+                    //this._isValidStartDate();
             },
 
             //Validates the participation percent entered is between 1 and 100
@@ -313,49 +313,50 @@
             },
 
             //Validates the duration entered is not less than 1 day
-            _isValidDuration: function () {
-                var errorTextNode = dom.byId("durationErrorText");
-                var errorIconNode = dom.byId("durationErrorIcon");
-                var duration = dom.byId("durationSpinner").value;
+            //_isValidDuration: function () {
+            //    var errorTextNode = dom.byId("durationErrorText");
+            //    var errorIconNode = dom.byId("durationErrorIcon");
+            //    var duration = dom.byId("durationSpinner").value;
 
-                if (!this._isUnsignedNumeric(duration) || duration < 1 || duration > 365) {
-                    this._setError(resources.addtestview.error_duration, errorTextNode, errorIconNode);
-                    return false;
-                }
+            //    if (!this._isUnsignedNumeric(duration) || duration < 1 || duration > 365) {
+            //        this._setError(resources.addtestview.error_duration, errorTextNode, errorIconNode);
+            //        return false;
+            //    }
 
-                this._setError("", errorTextNode, errorIconNode);
-                return true;
-            },
+            //    this._setError("", errorTextNode, errorIconNode);
+            //    return true;
+            //},
 
             //Validates the date information is A) a valid date format and B) not in the past
             _isValidStartDate: function () {
-                if (dom.byId("delayStartOption").checked) {
-                    var errorTextNode = dom.byId("datePickerErrorText");
-                    var errorIconNode = dom.byId("datePickerErrorIcon");
-                    var scheduleText = dom.byId("ScheduleText");
-                    var start = this.startDatePicker.get("value");
-                    var now = new Date();
+                return true;
+                //if (dom.byId("delayStartOption").checked) {
+                //    var errorTextNode = dom.byId("datePickerErrorText");
+                //    var errorIconNode = dom.byId("datePickerErrorIcon");
+                //    var scheduleText = dom.byId("ScheduleText");
+                //    var start = this.startDatePicker.get("value");
+                //    var now = new Date();
 
-                    if (start !== "") {
-                        if (isNaN(new Date(start))) {
-                            this._setError(resources.addtestview.error_invalid_date_time_value,
-                                errorTextNode,
-                                errorIconNode);
-                            scheduleText.innerText = resources.addtestview.error_test_not_schedulded_or_started;
-                            return false;
-                        } else if (new Date(start).getTime() < now.getTime()) {
-                            this._setError(resources.addtestview.error_date_in_the_past, errorTextNode, errorIconNode);
-                            scheduleText.innerText = resources.addtestview.error_test_not_schedulded_or_started;
-                            return false;
-                        }
-                    }
+                //    if (start !== "") {
+                //        if (isNaN(new Date(start))) {
+                //            this._setError(resources.addtestview.error_invalid_date_time_value,
+                //                errorTextNode,
+                //                errorIconNode);
+                //            scheduleText.innerText = resources.addtestview.error_test_not_schedulded_or_started;
+                //            return false;
+                //        } else if (new Date(start).getTime() < now.getTime()) {
+                //            this._setError(resources.addtestview.error_date_in_the_past, errorTextNode, errorIconNode);
+                //            scheduleText.innerText = resources.addtestview.error_test_not_schedulded_or_started;
+                //            return false;
+                //        }
+                //    }
 
-                    this._setError("", errorTextNode, errorIconNode);
-                    return true;
-                }
-                else {
-                    return true;
-                }
+                //    this._setError("", errorTextNode, errorIconNode);
+                //    return true;
+                //}
+                //else {
+                //    return true;
+                //}
             },
 
             //Validates the supplied string as a positive integer
@@ -547,7 +548,7 @@
                 var me = this;               
 
                 this.model.testDescription = dom.byId("testDescription").value;
-                var startDateSelector = dom.byId("StartDateTimeSelector");
+                var startDateSelector = ""; //dom.byId("StartDateTimeSelector");
                 var utcNow = new Date(Date.now()).toUTCString();
                 if (startDateSelector.value === "") {
                     this.model.startDate = utcNow;

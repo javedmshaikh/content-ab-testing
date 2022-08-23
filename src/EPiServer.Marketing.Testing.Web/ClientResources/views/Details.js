@@ -175,15 +175,17 @@
                 textHelper.renderTitle(this.title);
                 textHelper.renderTestStatus(this.testStatus, this.testStarted);
                 textHelper.renderTestGloballyDisabled(this.testGloballyDisabled, this.detailsNotificationBar);
-                textHelper.renderTestDuration(this.testDuration);
-                textHelper.renderTestRemaining(this.testRemaining, this.testRemainingText);
-                textHelper.renderDurationProgress(durationProgressBarDetails);
-                textHelper.renderConfidence(this.confidence);
+                //textHelper.renderTestDuration(this.testDuration);
+                //textHelper.renderTestRemaining(this.testRemaining, this.testRemainingText);
+                //textHelper.renderDurationProgress(durationProgressBarDetails);
+                //textHelper.renderConfidence(this.confidence);
                 textHelper.renderPublishedInfo(this.publishedBy, this.datePublished);
                 textHelper.renderDraftInfo(this.changedBy, this.dateChanged);
                 this.kpiSummaryWidgets.push(textHelper.renderControlSummary(this.controlDetailsSummaryNode, this.controlConversionPercent));
                 this.kpiSummaryWidgets.push(textHelper.renderChallengerSummary(this.challengerDetailsSummaryNode, this.challengerConversionPercent));
                 textHelper.renderDescription(this.testDescription);
+                console.log("this.participationPercentage" + this.participationPercentage);
+                console.log("this.totalParticipants" + this.totalParticipants);
                 textHelper.renderVisitorStats(this.participationPercentage, this.totalParticipants);
                 ready(function () {
 

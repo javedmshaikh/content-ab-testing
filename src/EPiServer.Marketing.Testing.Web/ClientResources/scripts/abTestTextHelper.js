@@ -103,33 +103,33 @@
             },
 
             //sets text content of provided node to the context test duration
-            renderTestDuration: function (testDurationNode) {
-                if (Number(context.data.test.state) === 0) {
-                    testDurationNode.textContent = 0;
-                } else {
-                    testDurationNode.textContent = context.data.daysElapsed;
-                }
-            },
+            //renderTestDuration: function (testDurationNode) {
+            //    if (Number(context.data.test.state) === 0) {
+            //        testDurationNode.textContent = 0;
+            //    } else {
+            //        testDurationNode.textContent = context.data.daysElapsed;
+            //    }
+            //},
 
-            //sets text content of provided node to the context test time remaining
-            renderTestRemaining: function (testRemainingNode, testRemainingTextNode) {
-                if (Number(context.data.test.state) === 0) {
-                    testRemainingNode.textContent = resources.test_status_not_started;
-                    testRemainingTextNode.textContent = "";
-                } else if (Number(context.data.test.state) > 1) {
-                    testRemainingNode.textContent = "";
-                    testRemainingTextNode.textContent = resources.test_duration_completed;
-                }
-                else {
-                    testRemainingNode.textContent = context.data.daysRemaining;
-                    testRemainingTextNode.textContent = resources.days_remaining;
-                }
-            },
+            ////sets text content of provided node to the context test time remaining
+            //renderTestRemaining: function (testRemainingNode, testRemainingTextNode) {
+            //    if (Number(context.data.test.state) === 0) {
+            //        testRemainingNode.textContent = resources.test_status_not_started;
+            //        testRemainingTextNode.textContent = "";
+            //    } else if (Number(context.data.test.state) > 1) {
+            //        testRemainingNode.textContent = "";
+            //        testRemainingTextNode.textContent = resources.test_duration_completed;
+            //    }
+            //    else {
+            //        testRemainingNode.textContent = context.data.daysRemaining;
+            //        testRemainingTextNode.textContent = resources.days_remaining;
+            //    }
+            //},
 
-            //sets text content of provided node to the context confidence level
-            renderConfidence: function (confidenceNode) {
-                confidenceNode.textContent = context.data.test.confidenceLevel + "%";
-            },
+            ////sets text content of provided node to the context confidence level
+            //renderConfidence: function (confidenceNode) {
+            //    confidenceNode.textContent = context.data.test.confidenceLevel + "%";
+            //},
 
             //sets text content of provided nodes to the published content publishedy by and date published values
             renderPublishedInfo: function (publishedByNode, datePublishedNode) {
@@ -334,15 +334,15 @@
             },
 
             //sets and renders duration progress bar
-            renderDurationProgress: function (durationProgressIndicatorNode) {
-                var totalTestDuration = Number(context.data.daysElapsed) + Number(context.data.daysRemaining);
-                durationProgressIndicatorNode.set({ maximum: totalTestDuration });
+            //renderDurationProgress: function (durationProgressIndicatorNode) {
+            //    var totalTestDuration = Number(context.data.daysElapsed) + Number(context.data.daysRemaining);
+            //    durationProgressIndicatorNode.set({ maximum: totalTestDuration });
 
-                if (context.data.test.state === 0) {
-                    durationProgressIndicatorNode.set({ value: 0 });
-                } else {
-                    durationProgressIndicatorNode.set({ value: context.data.daysElapsed });
-                }
-            },
+            //    if (context.data.test.state === 0) {
+            //        durationProgressIndicatorNode.set({ value: 0 });
+            //    } else {
+            //        durationProgressIndicatorNode.set({ value: context.data.daysElapsed });
+            //    }
+            //},
         };
     });
