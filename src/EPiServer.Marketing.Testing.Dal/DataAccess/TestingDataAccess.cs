@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPiServer.Marketing.Testing.Dal.DataAccess
 {
+    //remove below and 
+    //initialize full stack servic
     [ServiceConfiguration(ServiceType = typeof(ITestingDataAccess), Lifecycle = ServiceInstanceScope.Transient)]
     public class TestingDataAccess : ITestingDataAccess
     {
@@ -279,12 +281,17 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess
         private Guid SaveHelper(IRepository repo, DalABTest testObject)
         {
             var id = testObject.Id;
-
-            // if a test doesn't exist, add it to the db
+            FullStack_Repository _fsRepo1 = new FullStack_Repository();
+            
             var test = repo.GetById(testObject.Id) as DalABTest;
             if (test == null)
             {
+                var keyList = _fsRepo1.AddExperiment(testObject);
+                testObject.FS_FlagKey = keyList[0];
+                testObject.FS_ExperimentKey = keyList[1];
                 repo.Add(testObject);
+
+                
             }
             else
             {

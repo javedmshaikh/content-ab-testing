@@ -17,6 +17,9 @@ namespace FullStack.Experimentaion.RestAPI
 
         bool CreateFlagRuleSet(List<OptiFlagRulesSet> ruleSet);
 
+        bool EnableExperiment();
+
+        bool DisableExperiment();
         List<OptiFeature> GetFeatureList();
         List<OptiAttribute> GetAttributeList();
         List<OptiEvent> GetEventList();

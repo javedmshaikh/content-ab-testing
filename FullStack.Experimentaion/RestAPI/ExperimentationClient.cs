@@ -287,6 +287,73 @@ namespace FullStack.Experimentaion.RestAPI
         }
 
 
+        public bool EnableExperiment()
+        {
+            if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
+            {
+                //_logger?.Log(Level.Error, "No rest authentication token or project id found for Optimizely");
+                return false;
+            }
+            
+            try
+            {
+                var client = GetRestClient();
+
+                // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
+                var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset/enabled", Method.Post);//DataFormat.Json);
+                    
+                    var response = client.Post(request);
+                    if (!response.IsSuccessful)
+                    {
+                        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                        return false;
+                    }
+               
+                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
+                //projectConfig.PollNow();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                //_logger?.Log(Level.Error, $"Could not query or parse attribute data from Optimizely", e);
+                return false;
+            }
+        }
+
+        public bool DisableExperiment()
+        {
+            if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
+            {
+                //_logger?.Log(Level.Error, "No rest authentication token or project id found for Optimizely");
+                return false;
+            }
+
+            try
+            {
+                var client = GetRestClient();
+
+                // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
+                var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset/disabled", Method.Post);//DataFormat.Json);
+
+                var response = client.Post(request);
+                if (!response.IsSuccessful)
+                {
+                    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                    return false;
+                }
+
+                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
+                //projectConfig.PollNow();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                //_logger?.Log(Level.Error, $"Could not query or parse attribute data from Optimizely", e);
+                return false;
+            }
+        }
         public bool CreateFlagRuleSet(List<OptiFlagRulesSet> optiFlagRuleSet)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
@@ -294,7 +361,7 @@ namespace FullStack.Experimentaion.RestAPI
                 //_logger?.Log(Level.Error, "No rest authentication token or project id found for Optimizely");
                 return false;
             }
-            if (optiFlagRuleSet.Count<1)
+            if (optiFlagRuleSet.Count < 1)
                 throw new ArgumentNullException(nameof(optiFlagRuleSet));
 
             try
@@ -313,15 +380,15 @@ namespace FullStack.Experimentaion.RestAPI
 
                 var data = JsonConvert.SerializeObject(optiFlagRuleSet.ToArray());
                 data = data.ToString().Replace("ValueClass", "value");
-                    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
-                    request.AddJsonBody(data);
-                    var response = client.Patch(request);
-                    if (!response.IsSuccessful)
-                    {
-                        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-                        return false;
-                    }
-               
+                request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
+                request.AddJsonBody(data);
+                var response = client.Patch(request);
+                if (!response.IsSuccessful)
+                {
+                    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                    return false;
+                }
+
                 //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
                 //projectConfig.PollNow();
 
