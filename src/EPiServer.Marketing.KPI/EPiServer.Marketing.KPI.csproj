@@ -27,5 +27,9 @@
     <EmbeddedResource Include="Markup\**\*" />
     <EmbeddedResource Include="EmbeddedLangFiles\**\*" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Compile Remove="Dal\DataAccess\KpiDataAccessFS.cs" />
+  </ItemGroup>
 
 </Project>

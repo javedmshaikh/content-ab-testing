@@ -5,10 +5,12 @@ using EPiServer.Marketing.KPI.Results;
 using EPiServer.Marketing.Testing.Core.DataClass;
 using EPiServer.Marketing.Testing.Core.DataClass.Enums;
 using EPiServer.Marketing.Testing.Core.Exceptions;
+using EPiServer.Marketing.Testing.Dal;
 using EPiServer.Marketing.Testing.Dal.DataAccess;
 using EPiServer.Marketing.Testing.Dal.Exceptions;
 using EPiServer.Marketing.Testing.Messaging;
 using EPiServer.ServiceLocation;
+using FullStack.Experimentaion.RestAPI;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -22,7 +24,8 @@ namespace EPiServer.Marketing.Testing.Core.Manager
     /// Central point of access for test data and test manipulation.
     /// </summary>
     public class TestManager : ITestManager
-    {        
+    {
+        private Injected<IExperimentationClient> _experimentationClient;
         private readonly Injected<ITestingDataAccess> _dataAccess;
         private Random _randomParticiaption = new Random();
         private readonly Injected<IKpiManager> _kpiManager;
@@ -228,6 +231,15 @@ namespace EPiServer.Marketing.Testing.Core.Manager
                         new TestEventArgs(managerTest)
                     );
                 }
+
+                //Call Optimizely SDK
+
+                //FullStack_Repository fsRepo = new FullStack_Repository();
+
+                //fsRepo.OptimizelySDK_AssignToVariants("", "");
+                
+                //raise test event
+                //fsRepo.raiseOptiSDKEvent("");
             }
             return activePage;
         }

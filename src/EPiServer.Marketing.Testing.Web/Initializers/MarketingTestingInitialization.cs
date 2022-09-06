@@ -6,9 +6,11 @@ using EPiServer.Logging;
 using EPiServer.Marketing.Testing.Core;
 using EPiServer.Marketing.Testing.Core.Manager;
 using EPiServer.Marketing.Testing.Dal;
+using EPiServer.Marketing.Testing.Dal.DataAccess;
 using EPiServer.Marketing.Testing.Web.Evaluator;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
+using FullStack.Experimentaion.RestAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +37,8 @@ namespace EPiServer.Marketing.Testing.Web.Initializers
             int.TryParse(configuredTimeout, out int timeout);
 
             context.Services.Configure<TestingOption>(configuration.GetSection(TestingOption.Section));
-
+            context.Services.AddTransient<IExperimentationFactory, DefaultExperimentationFactory>();
+            context.Services.AddSingleton<IExperimentationClient, ExperimentationClient>();
             context.Services.AddTransient<IContentLockEvaluator, ABTestLockEvaluator>();
             context.Services.AddSingleton<ITestManager>(
                 serviceLocator =>

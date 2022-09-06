@@ -93,6 +93,16 @@ namespace EPiServer.Marketing.Testing.Dal.EntityModel
         public string ContentLanguage { get; set; }
 
         /// <summary>
+        /// Flag key required for retrieving FS Flag from Full Stack
+        /// </summary>
+        public string FS_FlagKey { get; set; }
+
+        /// <summary>
+        /// Experiment Key required for retrieving FS Rule Set from Full Stack.
+        /// </summary>
+        public string FS_ExperimentKey { get; set; }
+
+        /// <summary>
         /// List of variant items for the test.  These replace the OriginalItem during the test.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

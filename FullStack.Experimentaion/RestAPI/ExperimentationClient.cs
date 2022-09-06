@@ -10,9 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using EPiServer.ServiceLocation;
 
 namespace FullStack.Experimentaion.RestAPI
 {
+    //[ServiceConfiguration(ServiceType = typeof(IExperimentationClient), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ExperimentationClient : IExperimentationClient
     {
         private readonly ExperimentationRestApiOptions _restOptions;
@@ -25,6 +27,15 @@ namespace FullStack.Experimentaion.RestAPI
 
             //ServiceLocator.Current.GetInstance(out ILogger epiErrorLogger);
             //_logger = epiErrorLogger;
+        }
+
+        public ExperimentationClient()
+        {
+            _restOptions = new ExperimentationRestApiOptions();
+            _restOptions.RestAuthToken = "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+            _restOptions.ProjectId = "21972070188";
+            _restOptions.VersionId = 1;
+            _restOptions.Environment = "production";
         }
 
         private RestClient GetRestClient()
@@ -117,6 +128,7 @@ namespace FullStack.Experimentaion.RestAPI
 
             try
             {
+                _restOptions.VersionId = 2;
                 var client = GetRestClient();
 
                 // Get a list of existing events
@@ -132,7 +144,7 @@ namespace FullStack.Experimentaion.RestAPI
                 var item = existingEvents.FirstOrDefault(x => x.Key == key);
                 if (item == null) // Create new event in Optimizely
                 {
-                    var data = new { archived = false, key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
+                    var data = new { key = key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/custom_events", Method.Post);//DataFormat.Json);
                     request.AddJsonBody(data);
                     var response = client.Post(request);
@@ -146,7 +158,7 @@ namespace FullStack.Experimentaion.RestAPI
                 {
                     if (key != item.Key || description != item.Description || OptiEvent.GetOptimizelyType(type) != item.Category)
                     {
-                        var data = new { archived = false, key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
+                        var data = new { key = key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
                         request = new RestRequest($"/projects/{_restOptions.ProjectId}/custom_events/{item.Id}", Method.Patch);//DataFormat.Json);
                         request.AddJsonBody(data);
                         var response = client.Patch(request);
@@ -248,7 +260,8 @@ namespace FullStack.Experimentaion.RestAPI
                 //var item = existingFlag.FirstOrDefault(x => x.Key == optiFlag.Key);
                 if (existingFlag.Key == null) // Create new attribute in Optimizely
                 {
-                    var data = new { key = optiFlag.Key, name = optiFlag.Name, description = optiFlag.Description ?? "" , outlier_filtering_enabled = false };
+                    var data = JsonConvert.SerializeObject(optiFlag);
+                    //var data = new { key = optiFlag.Key, name = optiFlag.Name, description = optiFlag.Description ?? "" , outlier_filtering_enabled = false, variable_definitions = optiFlag.VariableDefinition };
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Post);//DataFormat.Json);
                     request.AddJsonBody(data);
                     var response = client.Post(request);
@@ -274,8 +287,8 @@ namespace FullStack.Experimentaion.RestAPI
                     }
                 }
 
-                var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
-                projectConfig.PollNow();
+                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
+                //projectConfig.PollNow();
 
                 return true;
             }
@@ -321,7 +334,7 @@ namespace FullStack.Experimentaion.RestAPI
             }
         }
 
-        public bool DisableExperiment()
+        public bool DisableExperiment(string FlagKeyToDisable)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {
@@ -331,10 +344,11 @@ namespace FullStack.Experimentaion.RestAPI
 
             try
             {
+                _restOptions.FlagKey = FlagKeyToDisable;
                 var client = GetRestClient();
 
                 // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
-                var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset/disabled", Method.Post);//DataFormat.Json);
+                var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{FlagKeyToDisable}/environments/{_restOptions.Environment}/ruleset/disabled", Method.Post);//DataFormat.Json);
 
                 var response = client.Post(request);
                 if (!response.IsSuccessful)

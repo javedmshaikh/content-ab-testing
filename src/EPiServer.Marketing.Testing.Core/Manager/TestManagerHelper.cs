@@ -51,7 +51,9 @@ namespace EPiServer.Marketing.Testing.Core.Manager
                 CreatedDate = DateTime.SpecifyKind(theDalTest.CreatedDate, DateTimeKind.Utc),
                 ModifiedDate = DateTime.SpecifyKind(theDalTest.ModifiedDate, DateTimeKind.Utc),
                 Variants = AdaptToManagerVariant(theDalTest.Variants),
-                KpiInstances = AdaptToManagerKPI(_kpiManager, theDalTest.KeyPerformanceIndicators)
+                KpiInstances = AdaptToManagerKPI(_kpiManager, theDalTest.KeyPerformanceIndicators),
+                FS_FlagKey = theDalTest.FS_FlagKey,
+                FS_ExperimentKey = theDalTest.FS_ExperimentKey
             };
             return aTest;
         }

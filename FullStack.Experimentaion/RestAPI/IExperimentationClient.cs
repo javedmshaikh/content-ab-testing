@@ -19,7 +19,7 @@ namespace FullStack.Experimentaion.RestAPI
 
         bool EnableExperiment();
 
-        bool DisableExperiment();
+        bool DisableExperiment(string FlagKeyToDisable);
         List<OptiFeature> GetFeatureList();
         List<OptiAttribute> GetAttributeList();
         List<OptiEvent> GetEventList();

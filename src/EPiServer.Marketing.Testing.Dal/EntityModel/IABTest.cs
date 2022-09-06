@@ -81,6 +81,17 @@ namespace EPiServer.Marketing.Testing.Dal.EntityModel
         /// </summary>
         DateTime ModifiedDate { get; set; }
 
+
+        /// <summary>
+        /// Flag key required for retrieving FS Flag from Full Stack
+        /// </summary>
+        public string FS_FlagKey { get; set; }
+
+        /// <summary>
+        /// Experiment Key required for retrieving FS Rule Set from Full Stack.
+        /// </summary>
+        public string FS_ExperimentKey { get; set; }
+
         /// <summary>
         /// List of possible variant items.  These replace the OriginalItem during the test.
         /// </summary>

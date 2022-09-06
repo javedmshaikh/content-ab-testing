@@ -1,13 +1,18 @@
 ﻿using EPiServer.Marketing.Testing.Dal;
+using EPiServer.Marketing.Testing.Dal.DataAccess;
 using EPiServer.Marketing.Testing.Dal.EntityModel;
+using EPiServer.ServiceLocation;
 using FullStack.Experimentaion.Core.Config;
 using FullStack.Experimentaion.Core.Impl.Models;
 using FullStack.Experimentaion.RestAPI;
+using OptimizelySDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static FullStack.Experimentaion.Core.Impl.Models.OptiFeature;
+using static FullStack.Experimentaion.Core.Impl.Models.OptiFlag;
 
 namespace EPiServer.Marketing.Testing.Dal
 {
@@ -21,8 +26,8 @@ namespace EPiServer.Marketing.Testing.Dal
             _restOptions.RestAuthToken = "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
             _restOptions.ProjectId = "21972070188";
             _restOptions.VersionId = 1;
-            _restOptions.FlagKey = "AB_Test";
-            _restOptions.Environment = "development";
+            //_restOptions.FlagKey = "AB_Test";
+            _restOptions.Environment = "production";
 
             _expClient = new ExperimentationClient(_restOptions);
         }
@@ -34,23 +39,53 @@ namespace EPiServer.Marketing.Testing.Dal
 
         public List<string> AddExperiment(DalABTest objABTest)
         {
-            //
-            //create Flag
+
             //Console.WriteLine("Create AB Test FLAG");
-            var flagKey = objABTest.Title.Replace(" ", "_") + "_Flag";
+            var flagKey = objABTest.Title.Replace(" ", "_").Replace("/","") + "_Flag";
+            string Title = objABTest.Title.Replace("/","");
+            string Description = objABTest.Description.Replace("/", "");
+            int participationPercentage = Math.Abs(objABTest.ParticipationPercentage * 100);
+            int participationPercentageExcluded = Math.Abs((100 - objABTest.ParticipationPercentage) * 100); 
             OptiFlag optiFlag = new OptiFlag();
-            optiFlag.Description = objABTest.Description;
-            optiFlag.Name = objABTest.Title;
+            optiFlag.Description = Description;
+            optiFlag.Name = Title;
             optiFlag.Key = flagKey;
+
+            Variable contentGuid = new Variable();
+            contentGuid.Key = "content_guid";
+            contentGuid.Description = "Guid of content";
+            contentGuid.Type = "string";
+            contentGuid.DefaultValue = objABTest.OriginalItemId.ToString();
+
+            Variable draftVersion = new Variable();
+            draftVersion.Key = "draft_version";
+            draftVersion.Description = "Draft version of content";
+            draftVersion.Type = "integer";
+            draftVersion.DefaultValue = "0";
+
+            Variable publishedVersion = new Variable();
+            publishedVersion.Key = "published_version";
+            publishedVersion.Description = "Published version of content";
+            publishedVersion.Type = "integer";
+            publishedVersion.DefaultValue = "0";
+
+
+            //create guid variable
+            VariableDefinitions variableDefinitions = new VariableDefinitions();
+            variableDefinitions.Content_Guid = contentGuid;
+            variableDefinitions.Draft_Version = draftVersion;
+            variableDefinitions.Published_Version = publishedVersion;
+
+            optiFlag.VariableDefinition = variableDefinitions;
 
 
             var _flagCreated = _expClient.CreateOrUpdateFlag(optiFlag);
-            Console.WriteLine("");
-            Console.WriteLine("Features List");
 
-            //Console.ReadKey();
-            //create Flag Ruleset
-            /******************Create FLAG RULESET**************************/
+            //Use the flag created above for creating an experiment.
+            _restOptions.FlagKey = flagKey;
+            _expClient = new ExperimentationClient(_restOptions);
+
+
             //Console.WriteLine("Create FLAG RULE SET");
             Metric metric = new Metric()
             {
@@ -64,21 +99,21 @@ namespace EPiServer.Marketing.Testing.Dal
             List<Metric> metricLists = new List<Metric>();
             metricLists.Add(metric);
 
-            string experimentKey = objABTest.Title.Replace(" ", "_") + "_Experiment";
+            string experimentKey = objABTest.Title.Replace(" ", "_").Replace("/","") + "_Experiment";
             OptiFlagRulesSet optiflagruleset = new OptiFlagRulesSet()
             {
                 Op = "add",
-                Path = "/rules/landing_page_callout",
+                Path = "/rules/" + experimentKey,
                 value = null,
                 //Value = new ValueUnion() { String = "hello there"},
                 ValueClass = new ValueClass()
                 {
                     Key = experimentKey,
-                    Name = objABTest.Title + " Experiment",
-                    Description = objABTest.Description,
+                    Name = Title + " Experiment",
+                    Description = Description,
                     DistributionMode = "manual",
                     Type = "a/b",
-                    PercentageIncluded = objABTest.ParticipationPercentage,
+                    PercentageIncluded = participationPercentage,
                     Metrics = metricLists.ToArray(),
                     Variations = new Variations()
                     {
@@ -86,13 +121,13 @@ namespace EPiServer.Marketing.Testing.Dal
                         {
                             Key = "off",
                             Name = "Off",
-                            PercentageIncluded = objABTest.ParticipationPercentage,
+                            PercentageIncluded = participationPercentageExcluded,
                         },
                         On = new Off()
                         {
                             Key = "on",
                             Name = "On",
-                            PercentageIncluded = objABTest.ParticipationPercentage,
+                            PercentageIncluded = participationPercentage,
                         },
                     },
                 }
@@ -115,20 +150,58 @@ namespace EPiServer.Marketing.Testing.Dal
 
             Console.WriteLine("Create Ruleset");
             var _experimentCreated = _expClient.CreateFlagRuleSet(ruleSetLists);
-
-
-            //start experiment
             var _experimentStarted = EnableExperiment();
 
             List<string> keyList = new List<string>();
             keyList.Add(flagKey);
             keyList.Add(experimentKey);
-
-
-            
-
-            //return flag and experiment key so it gets logged in table
             return keyList;
+        }
+
+        public bool raiseOptiSDKEvent(string userId)
+        {
+            //var experimentFactory = ServiceLocator.Current.GetInstance<IExperimentationFactory>();
+            //var optiInstance = experimentFactory.Instance;
+            //var user = optiInstance.CreateUserContext(userId);
+            var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
+            var user = optimizelyClient.CreateUserContext(userId);
+            user.TrackEvent("page_view");
+            return false;
+        }
+
+        public bool OptimizelySDK_AssignToVariants(string FlagKey, string userId)
+        {
+
+            var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
+            if (optimizelyClient.IsValid)
+            {
+                /* --------------------------------
+                 * to get rapid demo results, generate random users. Each user always sees the same variation unless you reconfigure the flag rule.
+                 * --------------------------------
+                */
+                Random rnd = new Random();
+
+                var hasOnFlags = false;
+
+                var user = optimizelyClient.CreateUserContext(userId);
+                // "product_sort" corresponds to a flag key in your Optimizely project
+                var decision = user.Decide(FlagKey);
+                // did decision fail with a critical error?
+                if (string.IsNullOrEmpty(decision.VariationKey))
+                {
+                    Console.WriteLine("\n\ndecision error: " + string.Join(" ", decision.Reasons));
+                }
+                // get a dynamic configuration variable
+                // "sort_method" corresponds to a variable key in your Optimizely project
+                var contentGUID = decision.Variables.ToDictionary()["content_guid"];
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine(@"Optimizely client invalid. Verify in Settings>Environments that you used the primary environment's SDK key");
+                return false;
+            }
         }
 
         public bool EnableExperiment()
@@ -136,13 +209,6 @@ namespace EPiServer.Marketing.Testing.Dal
             var _experimentStarted = _expClient.EnableExperiment();
 
             return _experimentStarted;
-        }
-
-        public bool DisableExperiment()
-        {
-            var _experimentEnd = _expClient.DisableExperiment();
-
-            return _experimentEnd;
         }
 
         public OptiFlagRulesSet GetFlagRuleSet(string experimentKey)

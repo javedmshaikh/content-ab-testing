@@ -22,6 +22,8 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using EPiServer.Marketing.Testing.Core;
 using Microsoft.Extensions.Options;
+using FullStack.Experimentaion.RestAPI;
+using FullStack.Experimentaion.Core.Config;
 
 namespace EPiServer.Marketing.Testing.Web.Repositories
 {
@@ -35,7 +37,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
         private IKpiManager _kpiManager;
         private IHttpContextHelper _httpContextHelper;
         private ICacheSignal _cacheSignal;
-
+        private Injected<IExperimentationClient> _experimentationClient;
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -49,7 +51,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             _testManager = _serviceLocator.GetInstance<ITestManager>();
             _kpiManager = _serviceLocator.GetInstance<IKpiManager>();
             _httpContextHelper = new HttpContextHelper();
-
+            //_experimentationClient = _serviceLocator.GetInstance<IExperimentationClient>();
             _logger = LogManager.GetLogger();
             _cacheSignal = new RemoteCacheSignal(
                             ServiceLocator.Current.GetInstance<ISynchronizedObjectInstanceCache>(),
@@ -250,6 +252,9 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             foreach (var test in testList)
             {
                 _testManager.Delete(test.Id, cultureInfo);
+                _experimentationClient = new ExperimentationClient();
+                //Full Stack Experiment Stop Running Experiment
+                _experimentationClient.Service.DisableExperiment(test.FS_FlagKey);
             }
 
             ConfigureABTestingUsingActiveTestsCount();

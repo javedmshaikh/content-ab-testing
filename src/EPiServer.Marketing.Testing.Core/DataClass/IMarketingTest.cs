@@ -100,5 +100,15 @@ namespace EPiServer.Marketing.Testing.Core.DataClass
         /// List of KPIs.  These can be time on a page, form submission, etc.
         /// </summary>
         List<IKpi> KpiInstances { get; set; }
+
+        /// <summary>
+        /// Flag key required for retrieving FS Flag from Full Stack
+        /// </summary>
+        public string FS_FlagKey { get; set; }
+
+        /// <summary>
+        /// Experiment Key required for retrieving FS Rule Set from Full Stack.
+        /// </summary>
+        public string FS_ExperimentKey { get; set; }
     }
 }

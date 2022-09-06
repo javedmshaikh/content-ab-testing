@@ -52,14 +52,15 @@ namespace FullStack.Experimentaion.Core.Impl.Models
             public List<RolloutRule> RolloutRules { get; set; }
         }
 
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
         public class Variable
         {
-            [JsonProperty("archived")]
-            public bool Archived { get; set; }
+            //[JsonProperty("archived")]
+            //public bool Archived { get; set; }
             [JsonProperty("default_value")]
             public string DefaultValue { get; set; }
-            [JsonProperty("id")]
-            public ulong Id { get; set; }
+            //[JsonProperty("id")]
+            //public ulong Id { get; set; }
             [JsonProperty("key")]
             public string Key { get; set; }
             [JsonProperty("type")]
