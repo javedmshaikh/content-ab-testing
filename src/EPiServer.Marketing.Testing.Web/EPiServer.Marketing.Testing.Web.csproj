@@ -9,10 +9,12 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <NuspecFile>EPiServer.Marketing.Testing.Web.nuspec</NuspecFile>
     <NuspecProperties>Configuration=$(Configuration);version=$(MtVersion);mtNextMajorVersion=$(MtNextMajorVersion);uiVersion=$(UiVersion);uiNextMajorVersion=$(UiNextMajorVersion);cmsVersion=$(CmsVersion);cmsNextMajorVersion=$(CmsNextMajorVersion)</NuspecProperties>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedLangFiles\**\*" />
     <EmbeddedResource Include="EmbeddedScriptFiles\**\*" />
+    <Compile Remove="Repositories\MarketingTestingFSRepository.cs" />
     <EmbeddedResource Include="SchemaUpdater\Testing.zip" />
   </ItemGroup>
   <ItemGroup>

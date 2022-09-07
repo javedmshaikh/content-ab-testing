@@ -163,45 +163,45 @@ namespace EPiServer.Marketing.Testing.Dal
             //var experimentFactory = ServiceLocator.Current.GetInstance<IExperimentationFactory>();
             //var optiInstance = experimentFactory.Instance;
             //var user = optiInstance.CreateUserContext(userId);
-            var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
-            var user = optimizelyClient.CreateUserContext(userId);
-            user.TrackEvent("page_view");
+            //var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
+            //var user = optimizelyClient.CreateUserContext(userId);
+            //user.TrackEvent("page_view");
             return false;
         }
 
         public bool OptimizelySDK_AssignToVariants(string FlagKey, string userId)
         {
+            return false;
+            //var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
+            //if (optimizelyClient.IsValid)
+            //{
+            //    /* --------------------------------
+            //     * to get rapid demo results, generate random users. Each user always sees the same variation unless you reconfigure the flag rule.
+            //     * --------------------------------
+            //    */
+            //    Random rnd = new Random();
 
-            var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
-            if (optimizelyClient.IsValid)
-            {
-                /* --------------------------------
-                 * to get rapid demo results, generate random users. Each user always sees the same variation unless you reconfigure the flag rule.
-                 * --------------------------------
-                */
-                Random rnd = new Random();
+            //    var hasOnFlags = false;
 
-                var hasOnFlags = false;
+            //    var user = optimizelyClient.CreateUserContext(userId);
+            //    // "product_sort" corresponds to a flag key in your Optimizely project
+            //    var decision = user.Decide(FlagKey);
+            //    // did decision fail with a critical error?
+            //    if (string.IsNullOrEmpty(decision.VariationKey))
+            //    {
+            //        Console.WriteLine("\n\ndecision error: " + string.Join(" ", decision.Reasons));
+            //    }
+            //    // get a dynamic configuration variable
+            //    // "sort_method" corresponds to a variable key in your Optimizely project
+            //    var contentGUID = decision.Variables.ToDictionary()["content_guid"];
 
-                var user = optimizelyClient.CreateUserContext(userId);
-                // "product_sort" corresponds to a flag key in your Optimizely project
-                var decision = user.Decide(FlagKey);
-                // did decision fail with a critical error?
-                if (string.IsNullOrEmpty(decision.VariationKey))
-                {
-                    Console.WriteLine("\n\ndecision error: " + string.Join(" ", decision.Reasons));
-                }
-                // get a dynamic configuration variable
-                // "sort_method" corresponds to a variable key in your Optimizely project
-                var contentGUID = decision.Variables.ToDictionary()["content_guid"];
-
-                return true;
-            }
-            else
-            {
-                Console.WriteLine(@"Optimizely client invalid. Verify in Settings>Environments that you used the primary environment's SDK key");
-                return false;
-            }
+            //    return true;
+            //}
+            //else
+            //{
+            //    Console.WriteLine(@"Optimizely client invalid. Verify in Settings>Environments that you used the primary environment's SDK key");
+            //    return false;
+            //}
         }
 
         public bool EnableExperiment()

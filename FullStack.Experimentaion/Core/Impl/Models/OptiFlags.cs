@@ -8,6 +8,7 @@ using static FullStack.Experimentaion.Core.Impl.Models.OptiFeature;
 
 namespace FullStack.Experimentaion.Core.Impl.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class OptiFlag
     {
         [JsonProperty("key")]
@@ -26,12 +27,16 @@ namespace FullStack.Experimentaion.Core.Impl.Models
 
         public class VariableDefinitions
         {
-            [JsonProperty("amount")]
-            public Variable Amount { get; set; }
-            [JsonProperty("message")]
-            public Variable Message { get; set; }
-            [JsonProperty("advanced")]
-            public Variable Advanced { get; set; }
+            [JsonProperty("content_guid")]
+            public Variable Content_Guid { get; set; }
+
+            [JsonProperty("draft_version")]
+            public Variable Draft_Version { get; set; }
+
+            [JsonProperty("published_version")]
+            public Variable Published_Version { get; set; }
+
+
         }
 
     }

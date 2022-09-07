@@ -24,6 +24,7 @@ using EPiServer.Marketing.Testing.Core;
 using Microsoft.Extensions.Options;
 using FullStack.Experimentaion.RestAPI;
 using FullStack.Experimentaion.Core.Config;
+using EPiServer.Marketing.Testing.Web.FullStackSDK;
 
 namespace EPiServer.Marketing.Testing.Web.Repositories
 {
@@ -38,6 +39,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
         private IHttpContextHelper _httpContextHelper;
         private ICacheSignal _cacheSignal;
         private Injected<IExperimentationClient> _experimentationClient;
+        private Injected<IFullstackSDKClient> _fsSDKClient;
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -469,7 +471,10 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
 
         public Variant ReturnLandingPage(Guid testId)
         {
-            return _testManager.ReturnLandingPage(testId);
+            var variantLandingPage = _testManager.ReturnLandingPage(testId);
+            //variantLandingPage.ABTest.
+            _fsSDKClient.Service.TrackPageViewEvent("page_view", variantLandingPage.ABTest.FS_FlagKey, "on");
+            return variantLandingPage;
         }
 
         public IContent GetVariantContent(Guid contentGuid)
