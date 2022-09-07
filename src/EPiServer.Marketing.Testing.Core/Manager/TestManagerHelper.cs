@@ -84,6 +84,8 @@ namespace EPiServer.Marketing.Testing.Core.Manager
                 ContentLanguage = theManagerTest.ContentLanguage,
                 Variants = AdaptToDalVariant(theManagerTest.Variants),
                 KeyPerformanceIndicators = AdaptToDalKPI(theManagerTest.Id, theManagerTest.KpiInstances),
+                FS_FlagKey = theManagerTest.FS_FlagKey,
+                FS_ExperimentKey = theManagerTest.FS_ExperimentKey
             };
             return aTest;
         }

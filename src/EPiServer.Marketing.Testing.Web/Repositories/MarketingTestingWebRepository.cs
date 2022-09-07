@@ -472,8 +472,14 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
         public Variant ReturnLandingPage(Guid testId)
         {
             var variantLandingPage = _testManager.ReturnLandingPage(testId);
-            //variantLandingPage.ABTest.
-            _fsSDKClient.Service.TrackPageViewEvent("page_view", variantLandingPage.ABTest.FS_FlagKey, "on");
+            var currentTest = _testManager.Get(testId);//gets the information of test
+
+            //_fsSDKClient = new FullstackSDKClient();
+            if (variantLandingPage != null && variantLandingPage.IsPublished) { 
+                _fsSDKClient.Service.TrackPageViewEvent("page_view", currentTest.FS_FlagKey, "on");
+            }
+            else
+                _fsSDKClient.Service.TrackPageViewEvent("page_view", currentTest.FS_FlagKey, "off");
             return variantLandingPage;
         }
 
