@@ -14,13 +14,14 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
         internal static Optimizely GenerateClient()
         {
             var options = ServiceLocator.Current.GetInstance<IOptions<ExperimentationOptions>>();
-            var pollingInterval = TimeSpan.Parse(options.Value.PollingInterval);
+            
+            var pollingInterval = TimeSpan.Parse("0:0:30");
 
             var configManager = new HttpProjectConfigManager
               .Builder()
               .WithPollingInterval(pollingInterval)
-              .WithSdkKey(options.Value.Key)
-              .Build(false); // sync mode
+              .WithSdkKey("Lsy5ksi8ESGDM29PfbXVK")
+              .Build(true); // sync mode
 
             return OptimizelyFactory.NewDefaultInstance(configManager);
         }

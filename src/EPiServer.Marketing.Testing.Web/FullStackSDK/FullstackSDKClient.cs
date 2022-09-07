@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
+using OptimizelySDK.Entity;
 
 namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 {
@@ -13,22 +14,72 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
             _httpContext = ServiceLocator.Current.GetInstance<IHttpContextAccessor>().HttpContext;
         }
 
-        public bool TrackPageViewEvent(string eventName, string flagName, string variationKey)
+        public bool TrackPageViewEvent(string eventName, int itemVersion)
         {
             var userContext = GetUserContext();
             if (userContext == null)
                 return false;
 
             userContext.TrackEvent(eventName); //pass event name
-            var decision = userContext.Decide(flagName);//pass flag name
-            if (!decision.Enabled)
+
+            return true;
+        }
+        public bool LogUserDecideEvent(string flagName, string variationKey)
+        {
+            var userContext = GetUserContext();
+            if (userContext == null)
                 return false;
+
+            var decision = userContext.Decide(flagName);//pass flag name
 
             if (decision.VariationKey == variationKey)
                 return true;
 
             return false;
         }
+
+        private OptimizelySDK.OptimizelyUserContext GetUserContext()
+        {
+            //var options = ServiceLocator.Current.GetInstance<IOptions<ExperimentationOptions>>();
+            //if (!options.Value.IsEnabled)
+            //    return null;
+            //var audienceCookieName = options.Value.AudienceName;
+            //if (!string.IsNullOrEmpty(audienceCookieName))
+            //{
+            //    if (_httpContext.Request.Cookies.TryGetValue(audienceCookieName, out string _))
+            //    {
+            //        userAttributes.Add("FullStackUserGUID", true);
+            //    }
+            //}
+
+            //var userIdCookieName = options.Value.UserIdName;
+            //if (!_httpContext.Request.Cookies.TryGetValue(userIdCookieName, out string userId))
+            //    userId = options.Value.UnknownUserId;
+
+            
+            string userId;
+            var userAttributes = GetUserAttribute( out userId);
+            var client = FSExpClient.Get.Value;
+            var user = client.CreateUserContext(userId, userAttributes);
+
+            return user;
+        }
+
+        private UserAttributes GetUserAttribute(out string userId)
+        {
+            var userAttributes = new OptimizelySDK.Entity.UserAttributes();
+            if (!_httpContext.Request.Cookies.TryGetValue("FullStackUserGUID", out userId))
+            {
+
+            }
+            if (!string.IsNullOrEmpty(userId))
+            {
+                userAttributes.Add("FullStackUserGUID", userId);
+            }
+            return userAttributes;
+        }
+
+        #region commented code
 
         //public ExperimentBanner GetBannerBasedOnExperiment()
         //{
@@ -88,31 +139,7 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
         //        return $"col-{prefix}-12";
         //    }
         //}
+        #endregion
 
-        private OptimizelySDK.OptimizelyUserContext GetUserContext()
-        {
-            var options = ServiceLocator.Current.GetInstance<IOptions<ExperimentationOptions>>();
-            if (!options.Value.IsEnabled)
-                return null;
-
-            var userAttributes = new OptimizelySDK.Entity.UserAttributes();
-
-            var audienceCookieName = options.Value.AudienceName;
-            if (!string.IsNullOrEmpty(audienceCookieName))
-            {
-                if (_httpContext.Request.Cookies.TryGetValue(audienceCookieName, out string _))
-                {
-                    userAttributes.Add("FullStackUserGUID", true);
-                }
-            }
-
-            var userIdCookieName = options.Value.UserIdName;
-            if (!_httpContext.Request.Cookies.TryGetValue(userIdCookieName, out string userId))
-                userId = options.Value.UnknownUserId;
-
-            var client = FSExpClient.Get.Value;
-            var user = client.CreateUserContext(userId, userAttributes);
-            return user;
-        }
     }
 }

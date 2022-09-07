@@ -475,11 +475,11 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             var currentTest = _testManager.Get(testId);//gets the information of test
 
             //_fsSDKClient = new FullstackSDKClient();
-            if (variantLandingPage != null && variantLandingPage.IsPublished) { 
-                _fsSDKClient.Service.TrackPageViewEvent("page_view", currentTest.FS_FlagKey, "on");
+            if (variantLandingPage != null && !variantLandingPage.IsPublished) { 
+                _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, "on");
             }
             else
-                _fsSDKClient.Service.TrackPageViewEvent("page_view", currentTest.FS_FlagKey, "off");
+                _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, "off"); 
             return variantLandingPage;
         }
 
@@ -505,6 +505,18 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 asynch = async,
                 clientId = sessionid
             };
+            /// track version in user.decide
+            if (resultType.ToString() == "View") { 
+                /// page is loaded
+                
+            }
+            else // resultType = conversion
+            {
+                /// user ended up on the landing page
+                /// call page track event
+                /// 
+                _fsSDKClient.Service.TrackPageViewEvent("page_view", itemVersion);
+            }
             _testManager.IncrementCount(c);
         }
 
