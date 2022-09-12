@@ -19,15 +19,16 @@ namespace EPiServer.Marketing.Testing.Dal
     public class FullStack_Repository : IFullStack_Repository
     {
         private ExperimentationRestApiOptions _restOptions;
-
+        
         private IExperimentationClient _expClient;
         public FullStack_Repository() {
+            
             _restOptions = new ExperimentationRestApiOptions();
-            _restOptions.RestAuthToken = "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
-            _restOptions.ProjectId = "21972070188";
-            _restOptions.VersionId = 1;
+            _restOptions.RestAuthToken = FullStackSettings.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+            _restOptions.ProjectId = FullStackSettings.ProjectId; // "21972070188";
+            _restOptions.VersionId = FullStackSettings.APIVersion; //1
             //_restOptions.FlagKey = "AB_Test";
-            _restOptions.Environment = "production";
+            _restOptions.Environment = FullStackSettings.EnviromentKey; // "production";
 
             _expClient = new ExperimentationClient(_restOptions);
         }

@@ -471,16 +471,16 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
 
         public Variant ReturnLandingPage(Guid testId)
         {
-            var variantLandingPage = _testManager.ReturnLandingPage(testId);
             var currentTest = _testManager.Get(testId);//gets the information of test
+            string variationKey = string.Empty;
 
-            //_fsSDKClient = new FullstackSDKClient();
-            if (variantLandingPage != null && !variantLandingPage.IsPublished) { 
-                _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, "on");
+            var decissionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey);
+            if (decissionMade == true && !string.IsNullOrEmpty(variationKey)) // No errors happened and variation is decided
+            {
+                var variantLandingPage = _testManager.ReturnLandingPage(testId, variationKey);
+                return variantLandingPage;
             }
-            else
-                _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, "off"); 
-            return variantLandingPage;
+            else { return new Variant(); }
         }
 
         public IContent GetVariantContent(Guid contentGuid)

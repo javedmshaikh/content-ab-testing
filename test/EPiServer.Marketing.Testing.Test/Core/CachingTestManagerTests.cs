@@ -379,9 +379,9 @@ namespace EPiServer.Marketing.Testing.Test.Core
 
             var expectedTestId = Guid.NewGuid();
             var manager = new CachingTestManager(_mockSynchronizedObjectInstanceCache.Object, _mockEvents.Object, _mockTestManager.Object, 30);
-            manager.ReturnLandingPage(expectedTestId);
+            manager.ReturnLandingPage(expectedTestId, "On");
 
-            _mockTestManager.Verify(tm => tm.ReturnLandingPage(expectedTestId), Times.Once());
+            _mockTestManager.Verify(tm => tm.ReturnLandingPage(expectedTestId, "On"), Times.Once());
         }
 
         [Fact]
