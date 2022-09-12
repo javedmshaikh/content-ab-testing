@@ -469,7 +469,7 @@ namespace EPiServer.Marketing.Testing.Test.Core
             {
                 // clear the cache if you have to (tm.clearCache() ?) - this test is supposed to verify that the 
                 // database layer is called.
-                var landingPage = tm.ReturnLandingPage(theGuid);
+                var landingPage = tm.ReturnLandingPage(theGuid, "On");
 
                 if (landingPage.Id == originalItemId && !originalCalled)
                 {

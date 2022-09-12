@@ -250,11 +250,6 @@ namespace FullStack.Experimentaion.RestAPI
                 // Get a list of existing attributes
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{optiFlag.Key}", Method.Get);//DataFormat.Json);
                 var existingAttributesResponse = client.Get(request);
-                if (!existingAttributesResponse.IsSuccessful)
-                {
-                    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {existingAttributesResponse.ResponseStatus}");
-                    return false;
-                }
 
                 var existingFlag = JsonConvert.DeserializeObject<OptiFlag>(existingAttributesResponse.Content);
                 //var item = existingFlag.FirstOrDefault(x => x.Key == optiFlag.Key);
@@ -271,18 +266,18 @@ namespace FullStack.Experimentaion.RestAPI
                         return false;
                     }
                 }
-                else // Update attribute in Optimizely
-                {
-                    var data = JsonConvert.SerializeObject(optiFlag);
-                    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Patch);//DataFormat.Json);
-                    request.AddJsonBody(data);
-                    var response = client.Patch(request);
-                    if (!response.IsSuccessful)
-                    {
-                        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-                        return false;
-                    }
-                }
+                //else // Update attribute in Optimizely
+                //{
+                //    var data = JsonConvert.SerializeObject(optiFlag);
+                //    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Patch);//DataFormat.Json);
+                //    request.AddJsonBody(data);
+                //    var response = client.Patch(request);
+                //    if (!response.IsSuccessful)
+                //    {
+                //        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                //        return false;
+                //    }
+                //}
 
                 //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
                 //projectConfig.PollNow();

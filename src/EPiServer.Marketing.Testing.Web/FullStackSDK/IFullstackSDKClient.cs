@@ -6,7 +6,7 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
     {
         bool TrackPageViewEvent(string eventName, int itemVersion);
 
-        bool LogUserDecideEvent(string flagName, string variationKey);
+        bool LogUserDecideEvent(string flagName, out string variationKey);
         //ExperimentBanner GetBannerBasedOnExperiment();
         //ExperimentProductListing GetProductListingBasedOnExperiment();
     }

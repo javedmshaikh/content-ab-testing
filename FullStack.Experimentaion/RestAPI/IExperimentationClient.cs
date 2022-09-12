@@ -1,4 +1,5 @@
-﻿using FullStack.Experimentaion.Core.Impl.Models;
+﻿using FullStack.Experimentaion.Core.Config;
+using FullStack.Experimentaion.Core.Impl.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace FullStack.Experimentaion.RestAPI
 {
     public interface IExperimentationClient
     {
+        //abstract ExperimentationRestApiOptions GetRestAPIDefaultOptions();
         bool CreateOrUpdateAttribute(string key, string description = null);
         bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
         bool CreateEventIfNotExists(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);

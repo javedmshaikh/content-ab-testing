@@ -35,8 +35,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
         internal Mock<ITestHandler> _mockTestHandler;
         internal Mock<ICacheSignal> _mockCacheSignal;
 
-        private Guid _testGuid = Guid.Parse("984ae93a-3abc-469f-8664-250328ce8220");
-
+        private Guid _testGuid = Guid.Parse("063E5D84-8BE7-4312-B883-52BD021097BE");
         private MarketingTestingWebRepository GetUnitUnderTest()
         {
             _mockLogger = new Mock<ILogger>();
@@ -81,7 +80,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
 
             aRepo.ReturnLandingPage(_testGuid);
 
-            _mockTestManager.Verify(called => called.ReturnLandingPage(It.Is<Guid>(value => value == _testGuid)), Times.Once);
+            _mockTestManager.Verify(called => called.ReturnLandingPage(It.Is<Guid>(value => value == _testGuid), "On"), Times.Once);
         }
 
         [Fact]

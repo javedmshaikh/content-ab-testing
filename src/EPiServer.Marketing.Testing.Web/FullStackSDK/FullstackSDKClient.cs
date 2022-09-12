@@ -2,15 +2,18 @@
 using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
 using OptimizelySDK.Entity;
+using System;
+using EPiServer.Marketing.Testing.Web.Helpers;
 
 namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 {
     public partial class FullstackSDKClient : IFullstackSDKClient
     {
         private readonly HttpContext _httpContext;
-
-        public FullstackSDKClient()
+        private readonly CookieService _cookieService;
+        public FullstackSDKClient(CookieService cookieService)
         {
+            _cookieService = cookieService;
             _httpContext = ServiceLocator.Current.GetInstance<IHttpContextAccessor>().HttpContext;
         }
 
@@ -24,60 +27,45 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 
             return true;
         }
-        public bool LogUserDecideEvent(string flagName, string variationKey)
+        public bool LogUserDecideEvent(string flagName, out string variationKey)
         {
             var userContext = GetUserContext();
             if (userContext == null)
+            {
+                variationKey = string.Empty;
                 return false;
-
+            }
             var decision = userContext.Decide(flagName);//pass flag name
 
-            if (decision.VariationKey == variationKey)
-                return true;
+            variationKey = decision.VariationKey;
 
-            return false;
+            return true;
         }
 
         private OptimizelySDK.OptimizelyUserContext GetUserContext()
         {
-            //var options = ServiceLocator.Current.GetInstance<IOptions<ExperimentationOptions>>();
-            //if (!options.Value.IsEnabled)
-            //    return null;
-            //var audienceCookieName = options.Value.AudienceName;
-            //if (!string.IsNullOrEmpty(audienceCookieName))
-            //{
-            //    if (_httpContext.Request.Cookies.TryGetValue(audienceCookieName, out string _))
-            //    {
-            //        userAttributes.Add("FullStackUserGUID", true);
-            //    }
-            //}
+            var userInCookie = _cookieService.Get("FullStackUserGUID");
 
-            //var userIdCookieName = options.Value.UserIdName;
-            //if (!_httpContext.Request.Cookies.TryGetValue(userIdCookieName, out string userId))
-            //    userId = options.Value.UnknownUserId;
-
-            
-            string userId;
-            var userAttributes = GetUserAttribute( out userId);
+            if (string.IsNullOrEmpty(userInCookie)) {
+                userInCookie = Guid.NewGuid().ToString();
+                _cookieService.Set("FullStackUserGUID", userInCookie);
+            }
             var client = FSExpClient.Get.Value;
-            var user = client.CreateUserContext(userId, userAttributes);
+            var user = client.CreateUserContext(userInCookie, null);
 
             return user;
         }
 
-        private UserAttributes GetUserAttribute(out string userId)
-        {
-            var userAttributes = new OptimizelySDK.Entity.UserAttributes();
-            if (!_httpContext.Request.Cookies.TryGetValue("FullStackUserGUID", out userId))
-            {
-
-            }
-            if (!string.IsNullOrEmpty(userId))
-            {
-                userAttributes.Add("FullStackUserGUID", userId);
-            }
-            return userAttributes;
-        }
+        //private UserAttributes GetUserAttribute(out string userId)
+        //{
+        //    var userAttributes = new OptimizelySDK.Entity.UserAttributes();
+        //    _httpContext.Request.Cookies.TryGetValue("FullStackUserGUID", out userId);
+        //    if (!string.IsNullOrEmpty(userId))
+        //    {
+        //        userAttributes.Add("FullStackUserGUID", userId);
+        //    }
+        //    return userAttributes;
+        //}
 
         #region commented code
 

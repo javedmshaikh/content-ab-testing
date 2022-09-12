@@ -206,23 +206,23 @@ namespace EPiServer.Marketing.Testing.Core.Manager
         }
 
         /// <inheritdoc />
-        public Variant ReturnLandingPage(Guid testId)
+        public Variant ReturnLandingPage(Guid testId, string variationKey)
         {
             var currentTest = _dataAccess.Service.Get(testId);
             var managerTest = TestManagerHelper.ConvertToManagerTest(_kpiManager.Service, currentTest);
             var activePage = new Variant();
             if (managerTest != null)
             {
-                if (_randomParticiaption.Next(1, 100) <= managerTest.ParticipationPercentage)
-                {
-                    switch (TestManagerHelper.GetRandomNumber())
+                    switch (variationKey)
                     {
-                        case 1:
+                        case "off":
                         default:
-                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
-                            break;
-                        case 2:
+                            //Variants[1] holds the value of current published version
+                            //show it in FS Variation OFF
                             activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
+                            break;
+                        case "on":
+                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
                             break;
                     }
 
@@ -230,16 +230,6 @@ namespace EPiServer.Marketing.Testing.Core.Manager
                         DefaultMarketingTestingEvents.UserIncludedInTestEvent, 
                         new TestEventArgs(managerTest)
                     );
-                }
-
-                //Call Optimizely SDK
-
-                //FullStack_Repository fsRepo = new FullStack_Repository();
-
-                //fsRepo.OptimizelySDK_AssignToVariants("", "");
-                
-                //raise test event
-                //fsRepo.raiseOptiSDKEvent("");
             }
             return activePage;
         }

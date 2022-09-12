@@ -180,9 +180,9 @@ namespace EPiServer.Marketing.Testing.Core.Manager
         }
 
         /// <inheritdoc/>
-        public Variant ReturnLandingPage(Guid testId)
+        public Variant ReturnLandingPage(Guid testId, string variationKey)
         {
-            return _inner.ReturnLandingPage(testId);
+            return _inner.ReturnLandingPage(testId, variationKey);
         }
 
         /// <inheritdoc/>

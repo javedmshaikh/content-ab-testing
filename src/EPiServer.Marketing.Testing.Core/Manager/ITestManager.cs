@@ -123,11 +123,11 @@ namespace EPiServer.Marketing.Testing.Core.Manager
         void IncrementCount(Guid testId, int itemVersion, CountType resultType, Guid kpiId = default(Guid), bool asynch=true);
 
         /// <summary>
-        /// Randomly decides if a new user is to be part of the ongoing test.  If so, chooses 1 of the 2 variants that are part of the test to display to the user.
+        /// Decide based on Full Stack Decission. Off variant gets published version, On variant gets current version.
         /// </summary>
         /// <param name="testId">ID of a test.</param>
         /// <returns>The original or variant item under test.</returns>
-        Variant ReturnLandingPage(Guid testId);
+        Variant ReturnLandingPage(Guid testId, string variationKey);
 
         /// <summary>
         /// Gets the variant content from the variant cache.

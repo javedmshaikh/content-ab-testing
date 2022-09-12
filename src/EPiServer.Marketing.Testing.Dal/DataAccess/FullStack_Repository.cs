@@ -121,13 +121,13 @@ namespace EPiServer.Marketing.Testing.Dal
                         {
                             Key = "off",
                             Name = "Off",
-                            PercentageIncluded = participationPercentageExcluded,
+                            PercentageIncluded = 5000,
                         },
                         On = new Off()
                         {
                             Key = "on",
                             Name = "On",
-                            PercentageIncluded = participationPercentage,
+                            PercentageIncluded = 5000,
                         },
                     },
                 }

@@ -20,7 +20,7 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
             var configManager = new HttpProjectConfigManager
               .Builder()
               .WithPollingInterval(pollingInterval)
-              .WithSdkKey("Lsy5ksi8ESGDM29PfbXVK")
+              .WithSdkKey("3nE7rXHmg255uLXhDvWRC")
               .Build(true); // sync mode
 
             return OptimizelyFactory.NewDefaultInstance(configManager);
