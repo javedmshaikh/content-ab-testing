@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace FullStack.Experimentaion.Core.Config
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config
 {
     public class ExperimentationRestApiOptions
     {

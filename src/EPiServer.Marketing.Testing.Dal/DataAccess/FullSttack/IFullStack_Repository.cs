@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
 using EPiServer.Marketing.Testing.Dal.EntityModel;
-using FullStack.Experimentaion.Core.Impl.Models;
+
 
 namespace EPiServer.Marketing.Testing.Dal
 {

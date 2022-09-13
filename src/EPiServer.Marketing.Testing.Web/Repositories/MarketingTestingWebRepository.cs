@@ -22,9 +22,8 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using EPiServer.Marketing.Testing.Core;
 using Microsoft.Extensions.Options;
-using FullStack.Experimentaion.RestAPI;
-using FullStack.Experimentaion.Core.Config;
 using EPiServer.Marketing.Testing.Web.FullStackSDK;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI;
 
 namespace EPiServer.Marketing.Testing.Web.Repositories
 {

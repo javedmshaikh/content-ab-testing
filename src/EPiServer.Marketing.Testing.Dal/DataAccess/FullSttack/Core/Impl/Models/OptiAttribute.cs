@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FullStack.Experimentaion.Core.Impl.Models
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models
 {
     /*
 https://library.optimizely.com/docs/api/app/v2/index.html#operation/list_attributes

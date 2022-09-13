@@ -5,7 +5,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace FullStack.Experimentaion.Core.Impl.Models
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models
 {
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public partial class OptiFlagRulesSet

@@ -1,12 +1,11 @@
-﻿using FullStack.Experimentaion.Core.Config;
-using FullStack.Experimentaion.Core.Impl.Models;
+﻿using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FullStack.Experimentaion.RestAPI
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 {
     public interface IExperimentationClient
     {

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FullStack.Experimentaion.Core.Impl.Models.OptiFeature;
+using static EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models.OptiFeature;
 
-namespace FullStack.Experimentaion.Core.Impl.Models
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models
 {
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class OptiFlag

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FullStack.Experimentaion\FullStack.Experimentaion.csproj" />
     <ProjectReference Include="..\..\src\EPiServer.Marketing.Testing.Web\EPiServer.Marketing.Testing.Web.csproj" />
     <ProjectReference Include="..\..\src\EPiServer.Marketing.KPI.Commerce\EPiServer.Marketing.KPI.Commerce.csproj" />
   </ItemGroup>

@@ -1,18 +1,19 @@
 ﻿using EPiServer.Marketing.Testing.Dal;
 using EPiServer.Marketing.Testing.Dal.DataAccess;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI;
 using EPiServer.Marketing.Testing.Dal.EntityModel;
 using EPiServer.ServiceLocation;
-using FullStack.Experimentaion.Core.Config;
-using FullStack.Experimentaion.Core.Impl.Models;
-using FullStack.Experimentaion.RestAPI;
+using Microsoft.Extensions.Options;
 using OptimizelySDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FullStack.Experimentaion.Core.Impl.Models.OptiFeature;
-using static FullStack.Experimentaion.Core.Impl.Models.OptiFlag;
+using static EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models.OptiFeature;
+using static EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models.OptiFlag;
 
 namespace EPiServer.Marketing.Testing.Dal
 {
@@ -22,13 +23,13 @@ namespace EPiServer.Marketing.Testing.Dal
         
         private IExperimentationClient _expClient;
         public FullStack_Repository() {
-            
+            var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
             _restOptions = new ExperimentationRestApiOptions();
-            _restOptions.RestAuthToken = FullStackSettings.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
-            _restOptions.ProjectId = FullStackSettings.ProjectId; // "21972070188";
-            _restOptions.VersionId = FullStackSettings.APIVersion; //1
+            _restOptions.RestAuthToken = options.Value.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+            _restOptions.ProjectId = options.Value.ProjectId; // "21972070188";
+            _restOptions.VersionId = options.Value.APIVersion; //1
             //_restOptions.FlagKey = "AB_Test";
-            _restOptions.Environment = FullStackSettings.EnviromentKey; // "production";
+            _restOptions.Environment = options.Value.EnviromentKey; // "production";
 
             _expClient = new ExperimentationClient(_restOptions);
         }

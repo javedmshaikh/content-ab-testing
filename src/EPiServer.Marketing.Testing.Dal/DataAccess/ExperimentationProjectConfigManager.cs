@@ -8,15 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
-namespace FullStack.Experimentaion.Core.Impl
+namespace EPiServer.Marketing.Testing.Dal.DataAccess
 {
     public class ExperimentationProjectConfigManager : PollingProjectConfigManager
     {
         private string Url;
         private string LastModifiedSince = string.Empty;
         private string DatafileAccessToken = string.Empty;
-        private static System.Timers.Timer SyncDataFile = null;
+        private static Timer SyncDataFile = null;
         private static object _padlock = new object();
 
         private ExperimentationProjectConfigManager(TimeSpan period, string url, TimeSpan blockingTimeout, bool autoUpdate, ILogger logger, IErrorHandler errorHandler)
@@ -135,13 +136,13 @@ namespace FullStack.Experimentaion.Core.Impl
 
             lock (_padlock)
             {
-                SyncDataFile = new System.Timers.Timer(1000);
+                SyncDataFile = new Timer(10000);
                 SyncDataFile.Elapsed += SyncDataFile_Elapsed;
                 SyncDataFile.Start();
             }
         }
 
-        private void SyncDataFile_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void SyncDataFile_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
             {

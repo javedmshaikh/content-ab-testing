@@ -1,7 +1,7 @@
-﻿using CommonServiceLocator;
-using FullStack.Experimentaion.Core.Config;
-using FullStack.Experimentaion.Core.Impl;
-using FullStack.Experimentaion.Core.Impl.Models;
+﻿using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
+using EPiServer.ServiceLocation;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OptimizelySDK.Logger;
 using RestSharp;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using EPiServer.ServiceLocation;
 
-namespace FullStack.Experimentaion.RestAPI
+namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 {
     //[ServiceConfiguration(ServiceType = typeof(IExperimentationClient), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ExperimentationClient : IExperimentationClient
@@ -31,11 +31,12 @@ namespace FullStack.Experimentaion.RestAPI
 
         public ExperimentationClient()
         {
+            var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
             _restOptions = new ExperimentationRestApiOptions();
-            _restOptions.RestAuthToken = FullStackSettings.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
-            _restOptions.ProjectId = FullStackSettings.ProjectId; // "21972070188";
-            _restOptions.VersionId = FullStackSettings.APIVersion;
-            _restOptions.Environment = FullStackSettings.EnviromentKey;
+            _restOptions.RestAuthToken = options.Value.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+            _restOptions.ProjectId = options.Value.ProjectId; // "21972070188";
+            _restOptions.VersionId = options.Value.APIVersion;
+            _restOptions.Environment = options.Value.EnviromentKey;
         }
 
         private RestClient GetRestClient()
