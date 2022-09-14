@@ -1,5 +1,6 @@
-﻿using EPiServer.ServiceLocation;
-using FullStack.Experimentaion.Core.Config;
+﻿using EPiServer.Marketing.Testing.Dal;
+using EPiServer.Marketing.Testing.Dal.DataAccess;
+using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
 using OptimizelySDK;
 using OptimizelySDK.Config;
@@ -21,7 +22,7 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
             var configManager = new HttpProjectConfigManager
               .Builder()
               .WithPollingInterval(pollingInterval)
-              .WithSdkKey(FullStackSettings.SDKKey)
+              .WithSdkKey(new FullStackSettings().SDKKey)
               .Build(true); // sync mode
 
             return OptimizelyFactory.NewDefaultInstance(configManager);

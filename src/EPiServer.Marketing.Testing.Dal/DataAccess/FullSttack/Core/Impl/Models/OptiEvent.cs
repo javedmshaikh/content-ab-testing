@@ -7,30 +7,32 @@ using System.Threading.Tasks;
 
 namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models
 {
+
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class OptiEvent
     {
-        [JsonProperty("archived")]
-        public bool Archived { get; set; }
-        [JsonProperty("category")]
-        public string Category { get; set; }
-        [JsonProperty("created")]
-        public DateTime Created { get; set; }
-        [JsonProperty("event_type")]
-        public string EventType { get; set; }
+        //[JsonProperty("archived")]
+        //public bool Archived { get; set; }
+        //[JsonProperty("category")]
+        //public string Category { get; set; }
+        //[JsonProperty("created")]
+        //public DateTime Created { get; set; }
+        //[JsonProperty("event_type")]
+        //public string EventType { get; set; }
         [JsonProperty("id")]
-        public ulong Id { get; set; }
-        [JsonProperty("is_classic")]
-        public bool IsClassic { get; set; }
+        public long Id { get; set; }
+        //[JsonProperty("is_classic")]
+        //public bool IsClassic { get; set; }
         [JsonProperty("key")]
         public string Key { get; set; }
-        [JsonProperty("last_modified")]
-        public DateTime LastModified { get; set; }
+        //[JsonProperty("last_modified")]
+        //public DateTime LastModified { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
-        [JsonProperty("project_id")]
-        public ulong ProjectId { get; set; }
+        //[JsonProperty("project_id")]
+        //public ulong ProjectId { get; set; }
 
         public enum Types
         {

@@ -7,15 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Core\Impl\Models\OptiFlagRuleSet.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Optimizely.SDK" Version="3.11.1" />
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

@@ -141,10 +141,10 @@
             textHelper.renderTitle(this.title);
             textHelper.renderTestStatus(this.testStatus, this.testStarted);
             textHelper.renderTestGloballyDisabled(this.testGloballyDisabled, this.detailsNotificationBar);
-            textHelper.renderTestDuration(this.testDuration);
-            textHelper.renderTestRemaining(this.testRemaining, this.testRemainingText);
-            textHelper.renderDurationProgress(durationProgressBar);
-            textHelper.renderConfidence(this.confidence);
+            //textHelper.renderTestDuration(this.testDuration);
+            //textHelper.renderTestRemaining(this.testRemaining, this.testRemainingText);
+            //textHelper.renderDurationProgress(durationProgressBar);
+            //textHelper.renderConfidence(this.confidence);
             textHelper.renderPublishedInfo(this.publishedBy, this.datePublished);
             textHelper.renderDraftInfo(this.changedBy, this.dateChanged);
             this.kpiSummaryWidgets.push(textHelper.renderControlSummary(this.controlPickWinnerSummaryNode, this.controlConversionPercent));

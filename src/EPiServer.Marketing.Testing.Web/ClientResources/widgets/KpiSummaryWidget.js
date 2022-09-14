@@ -32,7 +32,7 @@
 
         postCreate: function () {
             if (this.isLeader) {
-                domClass.replace(this.conversionPercent, "epi-kpiSummary-conversionRate-leader")
+                //domClass.replace(this.conversionPercent, "epi-kpiSummary-conversionRate-leader")
             }
         },
 

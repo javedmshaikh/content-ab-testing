@@ -87,16 +87,24 @@ namespace EPiServer.Marketing.Testing.Dal
             _restOptions.FlagKey = flagKey;
             _expClient = new ExperimentationClient(_restOptions);
 
+            var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
+
+            OptiEvent opEvent = new OptiEvent();
+            opEvent.Key = options.Value.EventName;
+            opEvent.Description = options.Value.EventDescription;
+            opEvent.Name = options.Value.EventName;
+            long eventId = 0;
+            _expClient.CreateEventIfNotExists(opEvent, out eventId);
 
             //Console.WriteLine("Create FLAG RULE SET");
             Metric metric = new Metric()
             {
-                EventId = 22018340356,
+                EventId = eventId,
                 EventType = "custom",
                 Scope = "visitor",
                 Aggregator = "unique",
                 WinningDirection = "increasing",
-                DisplayTitle = "page_view"
+                DisplayTitle = options.Value.EventName
             };
             List<Metric> metricLists = new List<Metric>();
             metricLists.Add(metric);
@@ -160,55 +168,23 @@ namespace EPiServer.Marketing.Testing.Dal
             return keyList;
         }
 
-        public bool raiseOptiSDKEvent(string userId)
-        {
-            //var experimentFactory = ServiceLocator.Current.GetInstance<IExperimentationFactory>();
-            //var optiInstance = experimentFactory.Instance;
-            //var user = optiInstance.CreateUserContext(userId);
-            //var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
-            //var user = optimizelyClient.CreateUserContext(userId);
-            //user.TrackEvent("page_view");
-            return false;
-        }
-
-        public bool OptimizelySDK_AssignToVariants(string FlagKey, string userId)
-        {
-            return false;
-            //var optimizelyClient = OptimizelyFactory.NewDefaultInstance("Lsy5ksi8ESGDM29PfbXVK");
-            //if (optimizelyClient.IsValid)
-            //{
-            //    /* --------------------------------
-            //     * to get rapid demo results, generate random users. Each user always sees the same variation unless you reconfigure the flag rule.
-            //     * --------------------------------
-            //    */
-            //    Random rnd = new Random();
-
-            //    var hasOnFlags = false;
-
-            //    var user = optimizelyClient.CreateUserContext(userId);
-            //    // "product_sort" corresponds to a flag key in your Optimizely project
-            //    var decision = user.Decide(FlagKey);
-            //    // did decision fail with a critical error?
-            //    if (string.IsNullOrEmpty(decision.VariationKey))
-            //    {
-            //        Console.WriteLine("\n\ndecision error: " + string.Join(" ", decision.Reasons));
-            //    }
-            //    // get a dynamic configuration variable
-            //    // "sort_method" corresponds to a variable key in your Optimizely project
-            //    var contentGUID = decision.Variables.ToDictionary()["content_guid"];
-
-            //    return true;
-            //}
-            //else
-            //{
-            //    Console.WriteLine(@"Optimizely client invalid. Verify in Settings>Environments that you used the primary environment's SDK key");
-            //    return false;
-            //}
-        }
-
         public bool EnableExperiment()
         {
             var _experimentStarted = _expClient.EnableExperiment();
+
+            return _experimentStarted;
+        }
+
+        public bool DisableExperiment(string flagKey)
+        {
+            var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
+            _restOptions = new ExperimentationRestApiOptions();
+            _restOptions.RestAuthToken = options.Value.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+            _restOptions.ProjectId = options.Value.ProjectId; // "21972070188";
+            _restOptions.VersionId = options.Value.APIVersion;
+            _restOptions.Environment = options.Value.EnviromentKey;
+            _restOptions.FlagKey = flagKey;
+            var _experimentStarted = _expClient.DisableExperiment(flagKey);
 
             return _experimentStarted;
         }

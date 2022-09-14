@@ -11,8 +11,8 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
     {
         //abstract ExperimentationRestApiOptions GetRestAPIDefaultOptions();
         bool CreateOrUpdateAttribute(string key, string description = null);
-        bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
-        bool CreateEventIfNotExists(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
+        //bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
+        bool CreateEventIfNotExists(OptiEvent opEvent, out long EventID);
 
         bool CreateOrUpdateFlag(OptiFlag optiFlag);
 
@@ -20,7 +20,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
         bool EnableExperiment();
 
-        bool DisableExperiment(string FlagKeyToDisable);
+        bool DisableExperiment(string FlagKey);
         List<OptiFeature> GetFeatureList();
         List<OptiAttribute> GetAttributeList();
         List<OptiEvent> GetEventList();

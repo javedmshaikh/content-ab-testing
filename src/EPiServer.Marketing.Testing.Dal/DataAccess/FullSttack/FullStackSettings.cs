@@ -40,5 +40,9 @@ namespace EPiServer.Marketing.Testing.Dal
         public string SDKKey { get; set; } = "3nE7rXHmg255uLXhDvWRC";
 
         public int APIVersion { get; set; } = 1;
+
+        public string EventName { get; set; } = "page_view";
+
+        public string EventDescription { get; set; } = "Event to calculate page view metrics";
     }
 }

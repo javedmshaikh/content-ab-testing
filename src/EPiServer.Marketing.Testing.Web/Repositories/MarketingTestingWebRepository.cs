@@ -254,7 +254,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             {
                 _testManager.Delete(test.Id, cultureInfo);
                 _experimentationClient = new ExperimentationClient();
-                //Full Stack Experiment Stop Running Experiment
+                //Full Stack Experiment Disable Running Experiment
                 _experimentationClient.Service.DisableExperiment(test.FS_FlagKey);
             }
 
@@ -453,6 +453,10 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
 
                     // only want to archive the test if publishing the winning variant succeeds.
                     ArchiveMarketingTest(currentTest.Id, workingVariantId, testResult.ContentCulture);
+
+
+                    //Full Stack Experiment Disable Running Experiment
+                    _experimentationClient.Service.DisableExperiment(currentTest.FS_FlagKey);
                 }
                 catch (Exception ex)
                 {
@@ -473,8 +477,8 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             var currentTest = _testManager.Get(testId);//gets the information of test
             string variationKey = string.Empty;
 
-            var decissionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey);
-            if (decissionMade == true && !string.IsNullOrEmpty(variationKey)) // No errors happened and variation is decided
+            var decisionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey);
+            if (decisionMade == true && !string.IsNullOrEmpty(variationKey)) // No errors happened and variation is decided
             {
                 var variantLandingPage = _testManager.ReturnLandingPage(testId, variationKey);
                 return variantLandingPage;
