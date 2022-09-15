@@ -1,12 +1,113 @@
 ﻿@using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack.Core.Impl.Models
 @model OptiExperimentResults
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-<div>
-        <h1 class="flex--1" data-test-section="results-page-title">Experiment Results</h1>
-</div>
-    <strong>@Model.ExperimentId</strong>
-   <h1>Hello There, Welcome</h1>
+
+
+@{}
+
+
+<style>
+  .strong{
+    font-weight: bold;
+  }
+  /* DivTable.com */
+.divTable{
+	display: table;
+	width: 100%;
 }
+.divTableRow {
+	display: table-row;
+  border: 1px solid #999999;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+</style>
+<div class="container">
+<div class="SectionHeader">
+  <div class="strong"><h2>Experiment Results</h2></div>
+  <div class="" style="float: right;"><span class="strong">Date:</span> Sept 10, 2022 <br /><span class="strong">Segment:</span> All Visitors</div>
+</div>
+<div class="SectionSummary">
+  <div class="strong"><h3>Summary</h3></div>
+  <div class="">
+    <div class="divTable">
+      <div class="divTableBody">
+      <div class="divTableRow">
+      <div class="divTableCell strong">Variations</div>
+      <div class="divTableCell strong">Visitors</div>
+      <div class="divTableCell strong">Page_View</div>
+      </div>
+      <div class="divTableRow">
+      <div class="divTableCell">Off</div>
+      <div class="divTableCell"><span>7</span><br /><span>70.00%</span></div>
+      <div class="divTableCell"><span>7</span><br /><span>70.00%</span></div>
+      </div>
+      <div class="divTableRow">
+      <div class="divTableCell">On</div>
+      <div class="divTableCell"><span>7</span><br /><span>70.00%</span></div>
+      <div class="divTableCell"><span>7</span><br /><span>70.00%</span></div>
+      </div>
+      </div>
+      </div>
+  </div>
+</div>
+<div><br /></div>
+<div class="SectionPageMetrics">
+  <div><span class="strong">Primary Metrics - </span><span>page_view</span></div>
+  <div class="">Unique conversions per visitor for page_view event</div>
+</div>
+<div><br /></div>
+<div class="SectionMetricsTable">
+  <div class="divTable">
+    <div class="divTableBody">
+    <div class="divTableRow">
+    <div class="divTableCell"></div>
+    <div class="divTableCell strong">Unique Conversions Visitors</div>
+    <div class="divTableCell strong">Conversion Rate</div>
+    <div class="divTableCell strong">Improvement</div>
+    <div class="divTableCell strong">Confidence Interval</div>
+    <div class="divTableCell strong">Statistical Significance</div>
+    </div>
+    <div class="divTableRow">
+    <div class="divTableCell">Off</div>
+    <div class="divTableCell"><span>1</span><br /><span>7</span></div>
+    <div class="divTableCell"><span>14.29%</span></div>
+    <div class="divTableCell"><span>--</span></div>
+    <div class="divTableCell"><span>--</span></div>
+    <div class="divTableCell"><span>--</span><br /><span>Baseline</span></div>
+    </div>
+    <div class="divTableRow">
+    <div class="divTableCell">On</div>
+    <div class="divTableCell"><span>1</span><br /><span>3</span></div>
+    <div class="divTableCell"><span>33.33%</span></div>
+    <div class="divTableCell"><span>+133.33%</span></div>
+    <div class="divTableCell"><span>0</span></div>
+    <div class="divTableCell"><span> &lt; 1%</span><br /><span>&gt; 100,000 visitors remaining</span></div>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+
