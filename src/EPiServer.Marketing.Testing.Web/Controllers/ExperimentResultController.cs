@@ -46,10 +46,10 @@ namespace EPiServer.Marketing.Testing.Web.Controllers
                 var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
                 ExperimentationRestApiOptions _restOptions = new ExperimentationRestApiOptions();
                 _restOptions.RestAuthToken = options.Value.RestAuthToken;
-                _restOptions.ExperimentID = 9300000105708;
+                _restOptions.ExperimentID = 9300000106673;
                 _restOptions.VersionId = 2;
 
-                long ExperimentID = 9300000105708;
+                long ExperimentID = 9300000106673;
                 OptiExperimentResults opResults = new OptiExperimentResults();
                 ExperimentationClient _experimentationClient = new ExperimentationClient(_restOptions);
                 var exResult = _experimentationClient.GetExperimentResult(out opResults, ExperimentID);
