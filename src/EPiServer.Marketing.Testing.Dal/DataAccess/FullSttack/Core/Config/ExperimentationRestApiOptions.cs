@@ -11,6 +11,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config
     {
         private string _restAuthToken;
         public string ProjectId { get; set; }
+        public long ExperimentID { get; set; }
         public string FlagKey { get; set; }
         public string Environment { get; set; }
         public int VersionId { get; set; }

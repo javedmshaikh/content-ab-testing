@@ -253,7 +253,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             foreach (var test in testList)
             {
                 _testManager.Delete(test.Id, cultureInfo);
-                _experimentationClient = new ExperimentationClient();
+                //_experimentationClient = new ExperimentationClient();
                 //Full Stack Experiment Disable Running Experiment
                 _experimentationClient.Service.DisableExperiment(test.FS_FlagKey);
             }

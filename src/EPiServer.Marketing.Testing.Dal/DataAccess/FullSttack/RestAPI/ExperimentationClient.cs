@@ -1,5 +1,6 @@
 ﻿using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack.Core.Impl.Models;
 using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -117,72 +118,6 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
             }
         }
 
-        //public bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null)
-        //{
-        //    if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
-        //    {
-        //        //_logger?.Log(Level.Error, "No rest authentication token or project id found for Optimizely");
-        //        return false;
-        //    }
-        //    if (key == null)
-        //        throw new ArgumentNullException(nameof(key));
-
-        //    try
-        //    {
-        //        _restOptions.VersionId = 2;
-        //        var client = GetRestClient();
-
-        //        // Get a list of existing events
-        //        var request = new RestRequest($"/events?project_id={_restOptions.ProjectId}", Method.Get);//DataFormat.Json);
-        //        var existingEventsResponse = client.Get(request);
-        //        if (!existingEventsResponse.IsSuccessful)
-        //        {
-        //            //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {existingEventsResponse.ResponseStatus}");
-        //            return false;
-        //        }
-
-        //        var existingEvents = JsonConvert.DeserializeObject<List<OptiEvent>>(existingEventsResponse.Content);
-        //        var item = existingEvents.FirstOrDefault(x => x.Key == key);
-        //        if (item == null) // Create new event in Optimizely
-        //        {
-        //            var data = new { key = key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
-        //            request = new RestRequest($"/projects/{_restOptions.ProjectId}/custom_events", Method.Post);//DataFormat.Json);
-        //            request.AddJsonBody(data);
-        //            var response = client.Post(request);
-        //            if (!response.IsSuccessful)
-        //            {
-        //                //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-        //                return false;
-        //            }
-        //        }
-        //        else // Update event in Optimizely
-        //        {
-        //            if (key != item.Key || description != item.Description || OptiEvent.GetOptimizelyType(type) != item.Category)
-        //            {
-        //                var data = new { key = key, description = description ?? "", category = OptiEvent.GetOptimizelyType(type) };
-        //                request = new RestRequest($"/projects/{_restOptions.ProjectId}/custom_events/{item.Id}", Method.Patch);//DataFormat.Json);
-        //                request.AddJsonBody(data);
-        //                var response = client.Patch(request);
-        //                if (!response.IsSuccessful)
-        //                {
-        //                    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-        //                    return false;
-        //                }
-        //            }
-        //        }
-
-        //        var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
-        //        projectConfig.PollNow();
-
-        //        return true;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        //_logger?.Log(Level.Error, $"Could not query or parse event data from Optimizely", e);
-        //        return false;
-        //    }
-        //}
-
         public bool CreateEventIfNotExists(OptiEvent opEvent, out long EventID)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
@@ -231,6 +166,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                 else
                 {
                     EventID = item.Id;
+                    return true;
                 }
                 EventID = 0;
                 return false;
@@ -243,6 +179,35 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
             }
         }
 
+        public bool GetExperimentResult(out OptiExperimentResults opResults, long ExperimentID)
+        {
+            opResults = new OptiExperimentResults();
+            if (string.IsNullOrEmpty(_restOptions.RestAuthToken))
+            {
+                //_logger?.Log(Level.Error, "No rest authentication token or project id found for Optimizely");
+                return false;
+            }
+            if (ExperimentID <= 0 )
+                throw new ArgumentNullException(nameof(ExperimentID));
+
+            try
+            {
+                var client = GetRestClient();
+
+                // Get a list of existing attributes
+                var request = new RestRequest($"/experiments/{ExperimentID}/results", Method.Get);//DataFormat.Json);
+                var existingAttributesResponse = client.Get(request);
+
+                opResults = JsonConvert.DeserializeObject<OptiExperimentResults>(existingAttributesResponse.Content);
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                //_logger?.Log(Level.Error, $"Could not query or parse attribute data from Optimizely", e);
+                return false;
+            }
+        }
 
         public bool CreateOrUpdateFlag(OptiFlag optiFlag)
         {

@@ -13,22 +13,6 @@ namespace EPiServer.Marketing.Testing.Dal
     public class FullStackSettings
     {
 
-        //private readonly IConfiguration _config;
-        //public FullStackSettings()
-        //{
-        //    ProjectId = ConfigurationManager.AppSettings["optimizely:full-stack:projectId"];
-        //    APIVersion = int.Parse(ConfigurationManager.AppSettings["optimizely:full-stack:apiVersion"]);
-        //    EnviromentKey = ConfigurationManager.AppSettings["optimizely:full-stack:environment"];
-        //    SDKKey = ConfigurationManager.AppSettings["optimizely:full-stack:sdkkey"];
-        //    if (ConfigurationManager.AppSettings["optimizely:full-stack:cacheinminutes"] != null)
-        //        CacheInMinutes = int.Parse(ConfigurationManager.AppSettings["optimizely:full-stack:cacheinminutes"]);
-        //    var token = ConfigurationManager.AppSettings["optimizely:full-stack:token"];
-        //    if (token.StartsWith("Bearer "))
-        //        RestAuthToken = token;
-        //    else
-        //        RestAuthToken = $"Bearer {token}";
-        //}
-
         public int CacheInMinutes { get; set; } = 10;
 
         public string RestAuthToken { get; set; } = "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";

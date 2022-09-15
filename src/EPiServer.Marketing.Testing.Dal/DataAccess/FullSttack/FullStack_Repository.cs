@@ -85,6 +85,7 @@ namespace EPiServer.Marketing.Testing.Dal
 
             //Use the flag created above for creating an experiment.
             _restOptions.FlagKey = flagKey;
+            _restOptions.VersionId = 2;
             _expClient = new ExperimentationClient(_restOptions);
 
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();

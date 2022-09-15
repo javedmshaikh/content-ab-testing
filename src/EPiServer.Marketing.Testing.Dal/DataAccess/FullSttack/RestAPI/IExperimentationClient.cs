@@ -1,4 +1,5 @@
 ﻿using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack.Core.Impl.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 {
     public interface IExperimentationClient
     {
-        //abstract ExperimentationRestApiOptions GetRestAPIDefaultOptions();
+        public bool GetExperimentResult(out OptiExperimentResults opResults, long ExperimentID);
         bool CreateOrUpdateAttribute(string key, string description = null);
         //bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
         bool CreateEventIfNotExists(OptiEvent opEvent, out long EventID);
