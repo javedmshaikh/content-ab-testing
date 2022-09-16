@@ -160,6 +160,9 @@ namespace EPiServer.Marketing.Testing.Dal
             ruleSetLists.Add(optiflagruleset2);
 
             Console.WriteLine("Create Ruleset");
+
+            _restOptions.VersionId = 1;
+            _expClient = new ExperimentationClient(_restOptions);
             var _experimentCreated = _expClient.CreateFlagRuleSet(ruleSetLists);
             var _experimentStarted = EnableExperiment();
 

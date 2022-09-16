@@ -48,7 +48,7 @@
 <div class="container">
 <div class="SectionHeader">
   <div class="strong"><h2>Experiment Results</h2></div>
-  <div class="" style="float: right;"><span class="strong">Date:</span> @(Model.StartTime.ToString("MMM dd, yyyy")) <br /><span class="strong">Segment:</span> @(Model.Metrics[0].Aggregator + " " + Model.Metrics[0].Scope)</div>
+  <div class="" style="float: right;"><span class="strong">Date:</span> @(Model.StartTime.ToString("MMM dd, yyyy")) <br /><span class="strong">Segment:</span> @(Model.Metrics[0].Aggregator + " " + Model.Metrics[0].Scope)<br /><span class="strong">Total Visitors:</span> @(Model.Reach.TotalCount)</div>
 </div>
 <div class="SectionSummary">
   <div class="strong"><h3>Summary</h3></div>
@@ -66,7 +66,7 @@
               <div class="divTableCell"><span>@(Model.Metrics[0].Results.Last().Value.Lift != null ? Math.Round(Math.Abs (Model.Metrics[0].Results.Last().Value.Lift.Value * 100),2) + "%" : "--")</span><br /><span class="fontGrey">@(Math.Round(Math.Abs(Model.Metrics[0].Results.Last().Value.Rate * 100),2))%</span></div>
           </div>
           <div class="divTableRow">
-              <div class="divTableCell">Published Version ((@Model.Metrics[0].Results.First().Value.Name))</div>
+              <div class="divTableCell">Published Version (@Model.Metrics[0].Results.First().Value.Name)</div>
               <div class="divTableCell"><span>@Model.Reach.Variations.First().Value.Count</span><br /><span class="fontGrey">@(Math.Round(Math.Abs (Model.Reach.Variations.First().Value.VariationReach * 100),2) + "%")</span></div>
               <div class="divTableCell"><span>@(Model.Metrics[0].Results.First().Value.Lift != null ? Math.Round(Math.Abs (Model.Metrics[0].Results.First().Value.Lift.Value * 100),2) + "%" : "--")</span><br /><span class="fontGrey">@(Math.Round(Math.Abs(Model.Metrics[0].Results.First().Value.Rate * 100),2))%</span></div>
           </div>
@@ -76,8 +76,8 @@
 </div>
 <div><br /></div>
 <div class="SectionPageMetrics">
-  <div><span class="strong">Primary Metrics - </span><span>page_view</span></div>
-  <div class="">Unique conversions per visitor for page_view event</div>
+  <div><span class="strong">Primary Metrics - </span><span>@Model.Metrics[0].Name</span></div>
+  <div class="fontGrey">Unique conversions per visitor for <b>@Model.Metrics[0].Name</b> event</div>
 </div>
 <div><br /></div>
 <div class="SectionMetricsTable">
