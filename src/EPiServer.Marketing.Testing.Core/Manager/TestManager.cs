@@ -7,10 +7,10 @@ using EPiServer.Marketing.Testing.Core.DataClass.Enums;
 using EPiServer.Marketing.Testing.Core.Exceptions;
 using EPiServer.Marketing.Testing.Dal;
 using EPiServer.Marketing.Testing.Dal.DataAccess;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI;
 using EPiServer.Marketing.Testing.Dal.Exceptions;
 using EPiServer.Marketing.Testing.Messaging;
 using EPiServer.ServiceLocation;
-using FullStack.Experimentaion.RestAPI;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -219,10 +219,10 @@ namespace EPiServer.Marketing.Testing.Core.Manager
                         default:
                             //Variants[1] holds the value of current published version
                             //show it in FS Variation OFF
-                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
+                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
                             break;
                         case "on":
-                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
+                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
                             break;
                     }
 

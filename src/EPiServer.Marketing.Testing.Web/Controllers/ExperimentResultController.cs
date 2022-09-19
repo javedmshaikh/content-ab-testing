@@ -27,42 +27,48 @@ namespace EPiServer.Marketing.Testing.Web.Controllers
             _episerverHelper = ServiceLocator.Current.GetInstance<IEpiserverHelper>();
             _logger = LogManager.GetLogger();
         }
-        public IActionResult Index(string contentId)
+        public IActionResult Index(string fs_FlagKey, string fs_ExperimentKey)
         {
             try
             {
-
                 
-                var cGuid = Guid.Parse(contentId);
-                var aTest = _webRepo.GetActiveTestForContent(cGuid);
-
-                //TODO: Get Flag from aTest
-
-                //TODO: Get ExperimentById from {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
-
-
-                //TODO: I am hardcoding experiment ID but it should come dynamically
-                //9300000105708
                 var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
                 ExperimentationRestApiOptions _restOptions = new ExperimentationRestApiOptions();
-                _restOptions.RestAuthToken = options.Value.RestAuthToken;
-                _restOptions.ExperimentID = 9300000106673;
+                _restOptions.RestAuthToken = options.Value.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+                _restOptions.ProjectId = options.Value.ProjectId; // "21972070188";
+                _restOptions.VersionId = options.Value.APIVersion; //1
+                _restOptions.Environment = options.Value.EnviromentKey; // "production";
+                IExperimentationClient _expClient = new ExperimentationClient(_restOptions);
+                OptiFetchFlagRuleSet newfetchedRuleSet = new OptiFetchFlagRuleSet();
+                bool foundExperimentID = _expClient.GetExperimentID(out newfetchedRuleSet, fs_FlagKey, fs_ExperimentKey);
+                
+                long ExperimentID = GetExeperimentIDFromURL(newfetchedRuleSet.rules.AB_Test_Experiment.fetch_results_ui_url);
+                _restOptions.ExperimentID = ExperimentID;
                 _restOptions.VersionId = 2;
 
-                long ExperimentID = 9300000106673;
                 OptiExperimentResults opResults = new OptiExperimentResults();
-                ExperimentationClient _experimentationClient = new ExperimentationClient(_restOptions);
-                var exResult = _experimentationClient.GetExperimentResult(out opResults, ExperimentID);
+                _expClient = new ExperimentationClient(_restOptions);
+                var exResult = _expClient.GetExperimentResult(out opResults, ExperimentID);
 
                 return View("~/Views/ExperimentResult/Index.cshtml", opResults);
             }
             catch (Exception e)
             {
                 _logger.Error("Internal error getting test using content Guid : "
-                    + contentId, e);
+                    + fs_FlagKey, e);
             }
 
             return new ContentResult();
+        }
+
+        private long GetExeperimentIDFromURL(string experimentURL)
+        {
+            string experimentID = experimentURL.Substring(experimentURL.LastIndexOf("/") + 1, experimentURL.Length - experimentURL.LastIndexOf("/") - 1);
+
+            if (!string.IsNullOrEmpty(experimentID))
+                return Convert.ToInt64( experimentID);
+
+            return 0;
         }
     }
 }

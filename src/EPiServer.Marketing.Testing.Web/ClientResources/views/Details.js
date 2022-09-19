@@ -169,16 +169,23 @@
                 topic.publish("/epi/shell/context/request", me.contextParameters);
             },
 
+            _renderDataVariables: function () {
+                var me = this;
+                console.log(this.context.data.test.originalItemId);
+                return this.context.data.test.originalItemId;
+            },
+
             _renderData: function () {
                 var me = this;
                 var summaryWidget;
                 textHelper.renderTitle(this.title);
+                this.myiframe.src = "/EPiServer/EPiServer.Marketing.Testing/ExperimentResult?fs_FlagKey=" + this.context.data.test.fs_FlagKey + "&fs_ExperimentKey=" + this.context.data.test.fs_ExperimentKey;
                 textHelper.renderTestStatus(this.testStatus, this.testStarted);
                 textHelper.renderTestGloballyDisabled(this.testGloballyDisabled, this.detailsNotificationBar);
                 //textHelper.renderTestDuration(this.testDuration);
                 //textHelper.renderTestRemaining(this.testRemaining, this.testRemainingText);
                 //textHelper.renderDurationProgress(durationProgressBarDetails);
-                //textHelper.renderConfidence(this.confidence);
+                //textHelper.renderConfidence(this.confidence, this.context.data.test);
                 textHelper.renderPublishedInfo(this.publishedBy, this.datePublished);
                 textHelper.renderDraftInfo(this.changedBy, this.dateChanged);
                 this.kpiSummaryWidgets.push(textHelper.renderControlSummary(this.controlDetailsSummaryNode, this.controlConversionPercent));

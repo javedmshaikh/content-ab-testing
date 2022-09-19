@@ -130,6 +130,12 @@
             //renderConfidence: function (confidenceNode) {
             //    confidenceNode.textContent = context.data.test.confidenceLevel + "%";
             //},
+            //renderConfidence: function (confidenceNode, aTest) {
+            //    //this.myiframe.src = "/EPiServer/EPiServer.Marketing.Testing/ExperimentResult?contentId=" + aTest.fs_FlagKey;
+            //    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            //    //console.log(aTest.originalItemId);
+            //    console.log(aTest);
+            //},
 
             //sets text content of provided nodes to the published content publishedy by and date published values
             renderPublishedInfo: function (publishedByNode, datePublishedNode) {

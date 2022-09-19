@@ -10,6 +10,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 {
     public interface IExperimentationClient
     {
+        public bool GetExperimentID(out OptiFetchFlagRuleSet fetchedFlagRuleSet, string flagKey, string experimentKey);
         public bool GetExperimentResult(out OptiExperimentResults opResults, long ExperimentID);
         bool CreateOrUpdateAttribute(string key, string description = null);
         //bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);

@@ -90,10 +90,11 @@ namespace EPiServer.Marketing.Testing.Dal
 
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
 
+            var eventNameEnding = "_" + Title.Replace(" ", "_");
             OptiEvent opEvent = new OptiEvent();
-            opEvent.Key = options.Value.EventName;
-            opEvent.Description = options.Value.EventDescription;
-            opEvent.Name = options.Value.EventName;
+            opEvent.Key = options.Value.EventName + eventNameEnding;
+            opEvent.Description = options.Value.EventDescription + ", " + Title;
+            opEvent.Name = options.Value.EventName + eventNameEnding;
             long eventId = 0;
             _expClient.CreateEventIfNotExists(opEvent, out eventId);
 

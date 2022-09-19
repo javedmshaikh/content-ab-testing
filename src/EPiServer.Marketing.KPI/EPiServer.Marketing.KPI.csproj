@@ -29,6 +29,8 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <Compile Remove="Common\StickySiteKpi.cs" />
+    <Compile Remove="Common\TimeOnPageClientKpi.cs" />
     <Compile Remove="Dal\DataAccess\KpiDataAccessFS.cs" />
   </ItemGroup>
 
