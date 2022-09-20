@@ -229,3 +229,7 @@ ModelManifest.xml
 /nupkgs
 modules
 zipoutput
+
+.DS_Store
+.idea/
+yarn.lock
