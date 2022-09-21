@@ -10,7 +10,7 @@
           <error_selected_samepage>You cannot select the page you are testing as the conversion goal page.</error_selected_samepage>
         </config_markup>
         <description>The selected page is the one that a visitor must click through to in order to count as a conversion.  Results: Views are the number of visitors that visited the test page. Conversions are the number of visitors that clicked through to the selected landing page while the test was running.</description>
-        <name>Landing Page</name>
+        <name>Page View</name>
         <readonly_markup>
           <conversion_header>Conversion goal</conversion_header>
           <conversion_selector_description>Visitor navigates to page</conversion_selector_description>
