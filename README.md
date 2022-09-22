@@ -49,10 +49,10 @@ if (string.IsNullOrEmpty(userId))
 	_cookieService.Set("FullStackUserGUID", Guid.NewGuid().ToString());
 ```
 
-## Session Cookie Required 
-Unique Session Cookie with name “FullStackUserGUID” is required for Full Stack User Context. Please create Unique session cookie with this name if does not exists.
+## Fields required for testing 
 
-## Fields required for testing * Test Goal* Page View and Conversion Page
+* Test Goal
+* Page View and Conversion Page
 * Participation Percentage
 
 ![Screenshot1](images/Screenshot1.png?raw=true "Screenshot1")
