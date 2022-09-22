@@ -706,7 +706,7 @@ namespace EPiServer.Marketing.Testing.Web
             contentEvents.LoadedContent += LoadedContent;
 
             enableProxyEventHandler();
-            _logger.Information("A/B testing has been enabled.");
+            _logger.Information("Experiment has been enabled.");
         }
 
         public void DisableABTesting()
@@ -716,7 +716,7 @@ namespace EPiServer.Marketing.Testing.Web
             contentEvents.LoadedContent -= LoadedContent;
 
             disableProxyEventHandler();
-            _logger.Information("A/B testing has been disabled.");
+            _logger.Information("Experiment has been disabled.");
         }
 
         #endregion

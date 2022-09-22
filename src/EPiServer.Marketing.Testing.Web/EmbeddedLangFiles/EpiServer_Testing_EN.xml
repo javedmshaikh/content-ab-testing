@@ -3,8 +3,8 @@
   <language name="English" id="en">
     <abtesting>
       <addtestcommand>
-        <label_text>A/B Test Changes</label_text>
-        <tooltip_text>A/B Test Changes</tooltip_text>
+        <label_text>Experiment Changes</label_text>
+        <tooltip_text>Experiment Changes</tooltip_text>
       </addtestcommand>
       <addtestview>
         <advanced_options>Advanced Options</advanced_options>
@@ -24,7 +24,7 @@
         <default> (default)</default>
         <draft_prefix>Draft - Edited by</draft_prefix>
         <duration_header>Test duration</duration_header>
-        <error_conversiongoal>You must select a conversion goal before you can start the A/B test.</error_conversiongoal>
+        <error_conversiongoal>You must select a conversion goal before you can start the Experiment.</error_conversiongoal>
         <error_date_in_the_past>The starting date/time of the test cannot be in the past.</error_date_in_the_past>
         <error_duplicate_kpi_values>Duplicate goals may not share the same values</error_duplicate_kpi_values>
         <error_duration>Duration must be a valid integer between 1 and 365</error_duration>
@@ -51,7 +51,7 @@
         <schedule_selector_delay>Schedule for later</schedule_selector_delay>
         <schedule_selector_start>Start immediately</schedule_selector_start>
         <schedule_test>Schedule Test</schedule_test>
-        <schedule_text_prefix>A/B test is currently </schedule_text_prefix>
+        <schedule_text_prefix>Experiment is currently </schedule_text_prefix>
         <schedule_tobegin_on>scheduled to begin on </schedule_tobegin_on>
         <start_default>Start Test</start_default>
         <test_description>Determine whether new or changed content improves the conversion rate.</test_description>
@@ -71,7 +71,7 @@
         <testduration>Test Duration:</testduration>
         <cookiedelimeter>Cookie Delimeter (Only to be changed while there are no active tests; otherwise, it could lead to inaccurate test results):</cookiedelimeter>
         <delimetererror>Cookie delimeter must be a single character.</delimetererror>
-        <isenabled>Enable A/B testing.</isenabled>
+        <isenabled>Enable Experiment.</isenabled>
       </admin>
       <archivedtestcomponent>
         <description>Shows archived tests for the selected content.</description>
@@ -120,14 +120,14 @@
       </archiveview>
       <canceltestcommand>
         <abort_confirmation_message>Are you sure you want to abort this test?</abort_confirmation_message>
-        <label_text>Abort A/B Test and Edit Page</label_text>
-        <tooltip_text>Abort A/B Test and Edit Page</tooltip_text>
+        <label_text>Abort Experiment and Edit Page</label_text>
+        <tooltip_text>Abort Experiment and Edit Page</tooltip_text>
       </canceltestcommand>
       <detailsview>
         <abort_confirmation_message>Are you sure you want to abort this test?</abort_confirmation_message>
         <advanced_options_confidence_level>Confidence Level</advanced_options_confidence_level>
         <advanced_options_header>Advanced Options</advanced_options_header>
-        <button_abort_option>Abort A/B Test</button_abort_option>
+        <button_abort_option>Abort Experiment</button_abort_option>
         <button_close>Close</button_close>
         <button_options>Options</button_options>
         <button_pick_winner_option>Pick The Winner</button_pick_winner_option>
@@ -161,7 +161,7 @@
         <view_challenger_content>View challenger content</view_challenger_content>
         <view_control_content>View control content</view_control_content>
         <views>views</views>
-        <test_disabled>A/B testing is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled.</test_disabled>
+        <test_disabled>Experiment is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled.</test_disabled>
       </detailsview>
       <kpisummarywidget>
         <conversions>Conversions</conversions>
@@ -169,14 +169,14 @@
         <weight>Weight</weight>
       </kpisummarywidget>
       <notificationbar>
-        <completed_test>An A/B test was completed on a version of this content. </completed_test>
+        <completed_test>An Experiment was completed on a version of this content. </completed_test>
         <details_link_text>View test</details_link_text>
         <details_link_tooltip>View test details</details_link_tooltip>
-        <ongoing_test>A version of this content is part of an on-going A/B test. </ongoing_test>
-        <scheduled_test>An A/B test is scheduled to run on a version of this content </scheduled_test>
+        <ongoing_test>A version of this content is part of an on-going Experiment. </ongoing_test>
+        <scheduled_test>An Experiment is scheduled to run on a version of this content </scheduled_test>
         <winner_link_text>Pick winner</winner_link_text>
         <winner_link_tooltip>View test details and pick winner </winner_link_tooltip>
-        <test_disabled>A/B testing is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled.</test_disabled>
+        <test_disabled>Experiment is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled.</test_disabled>
       </notificationbar>
       <percentagetemplate>
         <conversion_rate>Conversion Rate</conversion_rate>
@@ -221,7 +221,7 @@
         <test_status_running>Test is running, </test_status_running>
         <total_participants_details>Number of participants</total_participants_details>
         <views>views</views>
-        <test_disabled>A/B testing is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled. You can still pick a winner or abort the test.</test_disabled>
+        <test_disabled>Experiment is currently disabled. No additional views or conversions will be recorded for any test until A/B testing is re-enabled. You can still pick a winner or abort the test.</test_disabled>
       </pickwinnerview>
       <publishing>
         <error_cannot_publish>You cannot publish content while it is being tested. To publish your content, choose a winner or cancel the current test.</error_cannot_publish>
@@ -240,7 +240,7 @@
       <tasks>
         <activetests>Active Tests</activetests>
         <archivedtests>Archived Tests</archivedtests>
-        <category>A/B Tests</category>
+        <category>Experiments</category>
         <completedtests>Completed Tests</completedtests>
         <inactivetests>Scheduled Tests</inactivetests>
       </tasks>

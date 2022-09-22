@@ -189,7 +189,7 @@
                 }
                 this.savedBy.textContent = username.toUserFriendlyString(this.contentData.changedBy);
                 this.dateSaved.textContent = datetime.toUserFriendlyString(this.contentData.saved);
-                this.pageName.textContent = this.contentData.name + " A/B Test";
+                this.pageName.textContent = this.contentData.name + " Experiment";
 
                 var pubThumb = document.getElementById("draftThumbnail");
 

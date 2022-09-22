@@ -16,7 +16,7 @@
             publishedVersion: null,
 
             //Second content version to be used as potential content swap
-            //during active A/B test.
+            //during active Experiment.
             currentVersion: null,
 
             //Content ID of the content under test
