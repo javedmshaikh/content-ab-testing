@@ -90,11 +90,11 @@ namespace EPiServer.Marketing.Testing.Dal
 
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
 
-            var eventNameEnding = "_" + Title.Replace(" ", "_");
+            var eventNameEnding = options.Value.EventName + "_" + Title.Replace(" ", "_");
             OptiEvent opEvent = new OptiEvent();
-            opEvent.Key = options.Value.EventName + eventNameEnding;
+            opEvent.Key = eventNameEnding;
             opEvent.Description = options.Value.EventDescription + ", " + Title;
-            opEvent.Name = options.Value.EventName + eventNameEnding;
+            opEvent.Name = eventNameEnding;
             long eventId = 0;
             _expClient.CreateEventIfNotExists(opEvent, out eventId);
 
@@ -106,7 +106,7 @@ namespace EPiServer.Marketing.Testing.Dal
                 Scope = "visitor",
                 Aggregator = "unique",
                 WinningDirection = "increasing",
-                DisplayTitle = options.Value.EventName
+                DisplayTitle = eventNameEnding
             };
             List<Metric> metricLists = new List<Metric>();
             metricLists.Add(metric);
