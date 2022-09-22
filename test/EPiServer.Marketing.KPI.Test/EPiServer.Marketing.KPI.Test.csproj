@@ -5,6 +5,10 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Common\StickySiteKpiTests.cs" />
+    <Compile Remove="Common\TimeOnPageClientKpiTests.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EPiServer.Marketing.KPI\EPiServer.Marketing.KPI.csproj" />

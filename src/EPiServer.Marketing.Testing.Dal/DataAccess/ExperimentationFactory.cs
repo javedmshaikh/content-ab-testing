@@ -1,5 +1,6 @@
 ﻿using EPiServer.Logging;
 using EPiServer.ServiceLocation;
+using Microsoft.Extensions.Options;
 using OptimizelySDK;
 using OptimizelySDK.Event;
 using System;
@@ -45,8 +46,9 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess
         {
             get
             {
-                var options = ServiceLocator.Current.GetInstance<ExperimentationOptions>();
-                return !string.IsNullOrEmpty(options.SdkKey);
+                //var options = ServiceLocator.Current.GetInstance<ExperimentationOptions>();
+                var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
+                return !string.IsNullOrEmpty(options.Value.SDKKey);
             }
         }
     }          
