@@ -7,8 +7,9 @@ Test is created in Full Stack with Experimentation. Event with page title is cre
 
 ## User Lands on AB Test Page in CMS
 When user lands on AB Test page of CMS, Page Tracking event is called passing user context. User is assigned either variation A (ON) or variation B (OFF) version of the test page. 
- Variation “On” maps to New Draft version of AB Test Page.
- Variation “Off” maps to Current Published version of AB Test Page.
+
+* Variation “On” maps to New Draft version of AB Test Page.
+* Variation “Off” maps to Current Published version of AB Test Page.
 
 ## User navigates to conversion page in CMS
 When same user navigates to conversion page from AB Test page, Experimentation decision is made and is logged in Metrics in experimentation results. Same Metrics is visible from within CMS.
@@ -18,7 +19,6 @@ When Test is aborted, it is deleted from CMS and Experimentation is switched off
 
 ## Publish Winner
 When winner is selected, selected version of page is published in CMS and experimentation is switched off in Optimizely Full Stack.
-
  
 ## Installation Steps
 Required Packages in CMS content cloud for Optimizely Full Stack Integration to Work
@@ -28,7 +28,6 @@ Configuration Changes
 Add below configuration changes in AppSettings.json in root in your Content Cloud Project
 
 ```
-
 "full-stack": {
     "ProjectId": "21972070188",
     "APIVersion": 1,
@@ -55,6 +54,7 @@ Unique Session Cookie with name “FullStackUserGUID” is required for Full Sta
 
 ## Fields required for testing * Test Goal* Page View and Conversion Page
 * Participation Percentage
+
 ![Screenshot1](images/Screenshot1.png?raw=true "Screenshot1")
 
 
@@ -67,5 +67,6 @@ services.Configure<FullStackSettings>(_configuration.GetSection("full-stack"));
  
 ## Experimentation Results
 Experimentation Results is shown in CMS AB Test view as below
+
 ![Screenshot2](images/Screenshot2.png?raw=true "Screenshot2")
 
