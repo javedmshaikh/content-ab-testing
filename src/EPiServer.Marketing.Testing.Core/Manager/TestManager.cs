@@ -213,23 +213,37 @@ namespace EPiServer.Marketing.Testing.Core.Manager
             var activePage = new Variant();
             if (managerTest != null)
             {
-                    switch (variationKey)
+                if (variationKey.ToLower() == "off") // Load current published version
+                {
+                    //sometimes published version comes in variant[0] 
+                    //other times published version comes in variant[1], not sure why
+                    //handle it by checking if variant[0] is published or variant[1] is published
+                    if (currentTest.Variants[0].IsPublished == true) //[0] has is published version
                     {
-                        case "off":
-                        default:
-                            //Variants[1] holds the value of current published version
-                            //show it in FS Variation OFF
-                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
-                            break;
-                        case "on":
-                            activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
-                            break;
+                        activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
+                    }
+                    else //Variant[1] has published version, return variant[1]
+                    {
+                        activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
+                    }
+                }
+                else if (variationKey.ToLower() == "on")
+                {
+                    if (currentTest.Variants[0].IsPublished == true) //[0] has is published version
+                    {
+                        //if [0] has published version, return [1] becase flag is on and on means draft version
+                        activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[1]);
+                    }
+                    else //Variant[0] has draft version, return variant[0]
+                    {
+                        activePage = TestManagerHelper.ConvertToManagerVariant(currentTest.Variants[0]);
                     }
 
-                    _marketingTestingEvents.Service.RaiseMarketingTestingEvent(
-                        DefaultMarketingTestingEvents.UserIncludedInTestEvent, 
-                        new TestEventArgs(managerTest)
-                    );
+                }
+                _marketingTestingEvents.Service.RaiseMarketingTestingEvent(
+                    DefaultMarketingTestingEvents.UserIncludedInTestEvent, 
+                    new TestEventArgs(managerTest)
+                );
             }
             return activePage;
         }

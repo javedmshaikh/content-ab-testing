@@ -51,7 +51,7 @@ if (string.IsNullOrEmpty(userId))
 
 ## Fields required for testing 
 
-* Test Goal
+* Experiment Description
 * Page View and Conversion Page
 * Participation Percentage
 

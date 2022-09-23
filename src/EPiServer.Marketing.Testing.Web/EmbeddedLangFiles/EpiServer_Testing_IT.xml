@@ -134,7 +134,7 @@
         <content_challenger_header>B / Challenger</content_challenger_header>
         <content_control_header>A / Controllo</content_control_header>
         <content_winning_tooltip>Questa versione ha prestazioni migliori</content_winning_tooltip>
-        <conversion_header>Conversion goal(s)</conversion_header>
+        <conversion_header>Metrics</conversion_header>
         <conversion_rate>tasso di conversione</conversion_rate>
         <conversions>conversioni</conversions>
         <days_divider> giorno(i) / </days_divider>

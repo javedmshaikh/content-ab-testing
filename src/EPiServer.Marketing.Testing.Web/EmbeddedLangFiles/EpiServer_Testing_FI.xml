@@ -134,7 +134,7 @@
         <content_challenger_header>B / Haastaja</content_challenger_header>
         <content_control_header>A / Kontrolli</content_control_header>
         <content_winning_tooltip>Tämä versio toimii paremmin</content_winning_tooltip>
-        <conversion_header>Conversion goal(s)</conversion_header>
+        <conversion_header>Metrics</conversion_header>
         <conversion_rate>muuntonopeus</conversion_rate>
         <conversions>muuntoa</conversions>
         <days_divider> päivä(ä) / </days_divider>

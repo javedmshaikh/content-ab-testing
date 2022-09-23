@@ -134,7 +134,7 @@
         <content_challenger_header>B / Concurrent</content_challenger_header>
         <content_control_header>A / Controle</content_control_header>
         <content_winning_tooltip>Deze versie presteert beter</content_winning_tooltip>
-        <conversion_header>Conversion goal(s)</conversion_header>
+        <conversion_header>Metrics</conversion_header>
         <conversion_rate>conversiepercentage</conversion_rate>
         <conversions>conversies</conversions>
         <days_divider> dag(en) / </days_divider>

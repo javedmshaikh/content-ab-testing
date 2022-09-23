@@ -18,10 +18,10 @@
         <title path="/abtesting/archivedtestcomponent/title/">Archived Tests</title>
       </archivedtestcomponent>
       <archiveview>
-        <conversion_header path="/abtesting/archiveview/conversion_header/">Conversion goal(s)</conversion_header>
+        <conversion_header path="/abtesting/archiveview/conversion_header/">Metrics</conversion_header>
       </archiveview>
       <detailsview>
-        <conversion_header path="/abtesting/detailsview/conversion_header/">Conversion goal(s)</conversion_header>
+        <conversion_header path="/abtesting/detailsview/conversion_header/">Metrics</conversion_header>
       </detailsview>
     </abtesting>
   </language>

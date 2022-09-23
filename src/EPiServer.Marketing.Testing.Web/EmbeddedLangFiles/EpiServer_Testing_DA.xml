@@ -134,7 +134,7 @@
         <content_challenger_header>B/Udfordrer</content_challenger_header>
         <content_control_header>A/Kontrol</content_control_header>
         <content_winning_tooltip>Denne version giver bedre resultater</content_winning_tooltip>
-        <conversion_header>Conversion goal(s)</conversion_header>
+        <conversion_header>Metrics</conversion_header>
         <conversion_rate>konverteringsrate</conversion_rate>
         <conversions>konverteringer</conversions>
         <days_divider> dag(e)/ </days_divider>
