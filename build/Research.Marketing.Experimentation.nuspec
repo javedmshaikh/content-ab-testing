@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Research.Marketing.Experimentation</id>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <title>Optimizely Marketing Experimentation Tools</title>
     <authors>Optimizely Presales</authors>
     <owners>Optimizely Presales</owners>
@@ -18,6 +18,8 @@
         <dependency id="EPiServer.Marketing.Messaging" version="[3.1.0, 4.0.0)" />
         <dependency id="EPiServer.CMS.UI" version="[12.4.0, 13.0.0)" />
         <dependency id="EPiServer.CMS.AspNetCore" version="[12.4.0, 13.0.0)" />
+        <dependency id="RestSharp" version="108.0.1" />
+        <dependency id="Optimizely.SDK" version="3.11.1" />
       </group>
     </dependencies>
     <contentFiles>
