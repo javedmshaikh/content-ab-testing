@@ -41,7 +41,7 @@
                 <div class="cardBody">
                     <h1 class="objectIcon" data-dojo-attach-point="title"></h1>
                     <h2>
-                        <span data-dojo-attach-point="testStatus"></span>
+                        <span data-dojo-attach-point="testStatus" style="display:none;"></span>
                         <span class="epi-abtest-status" data-dojo-attach-point="testStarted"></span>
                     </h2>
 
@@ -142,8 +142,8 @@
                         </p>
                     </div>
                     <hr class="epi-abtest-hr">
-                    ${resources.detailsview.test_duration_header}
-                    <!--<div class="formsRow">
+                    <!--${resources.detailsview.test_duration_header}
+                    <div class="formsRow">
         <h4>${resources.detailsview.test_duration_header}</h4>
         <p>
             <strong><span data-dojo-attach-point="testDuration"></span></strong> ${resources.detailsview.days_divider} <strong><span data-dojo-attach-point="testRemaining"> </span></strong>&nbsp;<span data-dojo-attach-point="testRemainingText"></span>
