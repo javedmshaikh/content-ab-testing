@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'Feature/FS_Integration'
+    paths:
+      - '**.nuspec'
 jobs:
   build_test_pack:
     name: Build, test & pack
