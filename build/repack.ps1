@@ -1,5 +1,5 @@
 $v = "3.1.0";
-$newV = "0.0.3";
+$newV = "0.0.4";
 Remove-Item -Path "artifacts/packages/EPiServer.Marketing.Testing.$v" -Recurse -Force -Confirm:$false -ErrorAction Ignore
 Expand-Archive -LiteralPath "artifacts/packages/EPiServer.Marketing.Testing.$v.nupkg" -DestinationPath "artifacts/packages/EPiServer.Marketing.Testing.$v"
 Remove-Item "artifacts/packages/EPiServer.Marketing.Testing.$v/EPiServer.Marketing.Testing.nuspec"
