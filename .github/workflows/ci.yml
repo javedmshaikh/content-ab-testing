@@ -59,7 +59,7 @@ jobs:
       - name: Pack
         run: |
            ./build.ps1
-           ls artifacts/**
+           ls artifacts/packages/
       #- name: Publish packages
       #  run: dotnet nuget push artifacts/**/Research*.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }}
 
