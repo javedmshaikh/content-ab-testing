@@ -54,9 +54,12 @@ jobs:
       #   if:  ${{ github.ref != 'refs/heads/main' }}  
       #   run: |
       #     ./build/pack.ps1 -versionSuffix $env:versionSuffix
-      - name: Build
+      - name: Build and Package
         run: |
            ./build.ps1
            ls artifacts/packages/
-      - name: Publish packages
-        run: dotnet nuget push artifacts/**/Research*.nupkg --source https://{{ secrets.NUGET_URL }} --skip-duplicate --api-key ${{ secrets.NUGET_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: artifacts/packages/Research*.nupkg
