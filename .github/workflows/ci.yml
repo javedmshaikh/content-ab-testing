@@ -1,15 +1,9 @@
-﻿name: Nuget client Continuous integration
+name: Nuget client Continuous integration
 
 on:
   push:
     branches:
-      - 'main'
-      - 'develop'
-      - 'netcore'
-  pull_request:
-    branches:
-      - '*'
-      - '!main'
+      - 'Feature/FS_Integration'
 jobs:
   build_test_pack:
     name: Build, test & pack
@@ -26,40 +20,44 @@ jobs:
             node-version: '16'
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
-        with:
-          source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Install commerce dependencies
-        run: yarn install --frozen-lockfile
-        working-directory: src/EPiServer.Marketing.KPI.Commerce/clientResources
-      - name: Build KPI Commerce
-        run: yarn build 
-        working-directory: src/EPiServer.Marketing.KPI.Commerce/clientResources
-      - name: Install cms dependencies
-        run: yarn install --frozen-lockfile
-        working-directory: src/EPiServer.Marketing.Testing.Web/clientResources/config
-      - name: Build Testing 
-        run: yarn build 
-        working-directory: src/EPiServer.Marketing.Testing.Web/clientResources/config
-      - name: Restore
-        run: dotnet restore EPiServer.Marketing.Testing.sln --configfile Nuget.config
-      - name: Build (Release version)
-        if:  ${{ github.ref == 'refs/heads/main' }}
-        run: dotnet build --no-restore --configuration $env:buildConfiguration 
-      - name: Build (Pre-Release version)
-        if:  ${{ github.ref != 'refs/heads/main' }}
-        run: dotnet build --no-restore --configuration $env:buildConfiguration --version-suffix $env:versionSuffix
-      - name: Test
-        run: dotnet test --no-build --configuration $env:buildConfiguration
-      - name: Pack  (Release version)
-        if:  ${{ github.ref == 'refs/heads/main' }}  
-        run: |
-          ./build/pack.ps1 
-      - name: Pack  (Pre-Release version)
-        if:  ${{ github.ref != 'refs/heads/main' }}  
-        run: |
-          ./build/pack.ps1 -versionSuffix $env:versionSuffix
-      - name: Publish packages
-        run: dotnet nuget push artifacts/**/*.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      #   env:
+      #     NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # - name: Install commerce dependencies
+      #   run: yarn install --frozen-lockfile
+      #   working-directory: src/EPiServer.Marketing.KPI.Commerce/clientResources
+      # - name: Build KPI Commerce
+      #   run: yarn build 
+      #   working-directory: src/EPiServer.Marketing.KPI.Commerce/clientResources
+      # - name: Install cms dependencies
+      #   run: yarn install --frozen-lockfile
+      #   working-directory: src/EPiServer.Marketing.Testing.Web/clientResources/config
+      # - name: Build Testing 
+      #   run: yarn build 
+      #   working-directory: src/EPiServer.Marketing.Testing.Web/clientResources/config
+      # - name: Restore
+      #   run: dotnet restore EPiServer.Marketing.Testing.sln --configfile Nuget.config
+      # - name: Build (Release version)
+      #   if:  ${{ github.ref == 'refs/heads/main' }}
+      #   run: dotnet build --no-restore --configuration $env:buildConfiguration 
+      # - name: Build (Pre-Release version)
+      #   if:  ${{ github.ref != 'refs/heads/main' }}
+      #   run: dotnet build --no-restore --configuration $env:buildConfiguration --version-suffix $env:versionSuffix
+      # - name: Test
+      #   run: dotnet test --no-build --configuration $env:buildConfiguration
+      # - name: Pack  (Release version)
+      #   if:  ${{ github.ref == 'refs/heads/main' }}  
+      #   run: |
+      #     ./build/pack.ps1 
+      # - name: Pack  (Pre-Release version)
+      #   if:  ${{ github.ref != 'refs/heads/main' }}  
+      #   run: |
+      #     ./build/pack.ps1 -versionSuffix $env:versionSuffix
+      - name: Pack
+         run: |
+           ./build.ps1
+           ls artifacts/**
+      #- name: Publish packages
+      #  run: dotnet nuget push artifacts/**/Research*.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }}
 
