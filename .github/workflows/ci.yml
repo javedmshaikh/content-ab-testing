@@ -22,8 +22,8 @@ jobs:
             node-version: '16'
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
-      #   with:
-      #     source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        with:
+           source-url: https://{secrets.NUGET_URL}/v3/index.json
       #   env:
       #     NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # - name: Install commerce dependencies
@@ -56,10 +56,10 @@ jobs:
       #   if:  ${{ github.ref != 'refs/heads/main' }}  
       #   run: |
       #     ./build/pack.ps1 -versionSuffix $env:versionSuffix
-      - name: Pack
+      - name: Build
         run: |
            ./build.ps1
            ls artifacts/packages/
-      #- name: Publish packages
-      #  run: dotnet nuget push artifacts/**/Research*.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish packages
+        run: dotnet nuget push artifacts/**/Research*.nupkg --skip-duplicate -k ${{ secrets.NUGET_TOKEN }}
 
