@@ -55,7 +55,7 @@ jobs:
       #   run: |
       #     ./build/pack.ps1 -versionSuffix $env:versionSuffix
       - name: Pack
-         run: |
+        run: |
            ./build.ps1
            ls artifacts/**
       #- name: Publish packages
