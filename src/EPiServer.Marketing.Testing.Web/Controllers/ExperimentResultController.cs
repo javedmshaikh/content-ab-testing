@@ -41,14 +41,16 @@ namespace EPiServer.Marketing.Testing.Web.Controllers
                 IExperimentationClient _expClient = new ExperimentationClient(_restOptions);
                 OptiFetchFlagRuleSet newfetchedRuleSet = new OptiFetchFlagRuleSet();
                 bool foundExperimentID = _expClient.GetExperimentID(out newfetchedRuleSet, fs_FlagKey, fs_ExperimentKey);
-                
-                long ExperimentID = GetExeperimentIDFromURL(newfetchedRuleSet.rules.AB_Test_Experiment.fetch_results_ui_url);
-                _restOptions.ExperimentID = ExperimentID;
-                _restOptions.VersionId = 2;
-
                 OptiExperimentResults opResults = new OptiExperimentResults();
-                _expClient = new ExperimentationClient(_restOptions);
-                var exResult = _expClient.GetExperimentResult(out opResults, ExperimentID);
+                if (newfetchedRuleSet.rules != null)
+                {
+                    long ExperimentID = GetExeperimentIDFromURL(newfetchedRuleSet.rules.AB_Test_Experiment.fetch_results_ui_url);
+                    _restOptions.ExperimentID = ExperimentID;
+                    _restOptions.VersionId = 2;
+                    _expClient = new ExperimentationClient(_restOptions);
+                    var exResult = _expClient.GetExperimentResult(out opResults, ExperimentID);
+                }
+                
 
                 return View("~/Views/ExperimentResult/Index.cshtml", opResults);
             }
