@@ -262,10 +262,6 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                         return false;
                     }
                 }
-
-                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
-                //projectConfig.PollNow();
-
                 return true;
             }
             catch (Exception e)
