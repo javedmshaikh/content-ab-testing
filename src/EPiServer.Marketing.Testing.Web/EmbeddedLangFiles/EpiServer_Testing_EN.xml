@@ -34,7 +34,7 @@
         <goals_default_text>Example: Get more click-throughs to download the ebook by changing the advertisement image.</goals_default_text>
         <goals_header>Experiment Description</goals_header>
         <goals_selectlist_additional_kpi>Add another goal</goals_selectlist_additional_kpi>
-        <goals_selectlist_default>Add a Experiment</goals_selectlist_default>
+        <goals_selectlist_default>Add a Metrics</goals_selectlist_default>
         <goals_weight_description>Here you can decide if one of the goals is more important than the others when measuring a winner.</goals_weight_description>
         <goals_weight_equal_description>If you give all goals the same importance, conversions towards all goals are measured the same way.</goals_weight_equal_description>
         <goals_weight_heading>Balance the importance of the experiments:</goals_weight_heading>

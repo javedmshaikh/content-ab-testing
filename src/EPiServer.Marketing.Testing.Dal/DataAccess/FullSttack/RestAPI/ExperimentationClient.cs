@@ -242,18 +242,26 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                         return false;
                     }
                 }
-                //else // Update attribute in Optimizely
-                //{
-                //    var data = JsonConvert.SerializeObject(optiFlag);
-                //    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Patch);//DataFormat.Json);
-                //    request.AddJsonBody(data);
-                //    var response = client.Patch(request);
-                //    if (!response.IsSuccessful)
-                //    {
-                //        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-                //        return false;
-                //    }
-                //}
+                else // Update attribute in Optimizely
+                {
+                    OptiFlagUpdate opFlagUpdate = new OptiFlagUpdate();
+                    opFlagUpdate.Op = "replace";
+                    opFlagUpdate.Path = "/" + existingFlag.Key + "/description";
+                    opFlagUpdate.Value = optiFlag.Description;
+
+                    List<OptiFlagUpdate> flagsToUpdate = new List<OptiFlagUpdate>();
+                    flagsToUpdate.Add(opFlagUpdate);
+
+                    var data = JsonConvert.SerializeObject(flagsToUpdate.ToArray());
+                    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Patch);//DataFormat.Json);
+                    request.AddJsonBody(data);
+                    var response = client.Patch(request);
+                    if (!response.IsSuccessful)
+                    {
+                        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                        return false;
+                    }
+                }
 
                 //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
                 //projectConfig.PollNow();
@@ -390,9 +398,9 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     return false;
                 }
 
-                var existingFlag = JsonConvert.DeserializeObject<OptiFlagRulesSet>(existingAttributesResponse.Content);
+                var existingFlag = JsonConvert.DeserializeObject<OptiFetchFlagRuleSet>(existingAttributesResponse.Content);
                 //if data is found in ruleset, don't do anything.
-                if (string.IsNullOrEmpty(existingFlag.Op))
+                if (string.IsNullOrEmpty(existingFlag.url))
                 {
                     var data = JsonConvert.SerializeObject(optiFlagRuleSet.ToArray());
                     data = data.ToString().Replace("ValueClass", "value");
@@ -405,9 +413,41 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                         return false;
                     }
                 }
-                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
-                //projectConfig.PollNow();
+                else
+                {
+                    //Flag Ruleset already exists, set op to replace and run patch command
+                    //var updatedRuleSet = existingFlag;
+                    //updatedRuleSet.Op = "replace";
+                    //OptiFlagRulesSet optiflagruleset2 = new OptiFlagRulesSet()
+                    //{
 
+                    //    Op = "replace",
+                    //    Path = "/rule_priorities/0",
+                    //    ValueClass = null,
+                    //    value = _restOptions.FlagKey
+
+                    //};
+
+
+                    //List<OptiFlagRulesSet> ruleSetLists = new List<OptiFlagRulesSet>();
+                    //ruleSetLists.Add(updatedRuleSet);
+                    //ruleSetLists.Add(optiflagruleset2);
+
+                    
+                    //updatedRuleSet.Op = "replace";
+                    ////updatedRuleSet.ValueClass.op
+                    //var data = JsonConvert.SerializeObject(ruleSetLists.ToArray());
+                    //data = data.ToString().Replace("ValueClass", "value");
+                    //request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
+                    //request.AddJsonBody(data);
+                    //var response = client.Patch(request);
+                    //if (!response.IsSuccessful)
+                    //{
+                    //    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                    //    return false;
+                    //}
+                }
+                
                 return true;
             }
             catch (Exception e)
