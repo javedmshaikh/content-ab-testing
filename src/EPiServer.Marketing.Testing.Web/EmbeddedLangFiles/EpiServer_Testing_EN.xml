@@ -108,7 +108,7 @@
         <show_summary>Show Details</show_summary>
         <started> Started </started>
         <test_duration_header>Test duration</test_duration_header>
-        <test_percent_to_participations_divider> / Current number of participants is </test_percent_to_participations_divider>
+        <test_percent_to_participations_divider> </test_percent_to_participations_divider>
         <test_scheduled>It is scheduled to begin </test_scheduled>
         <test_status_completed>Test complete.</test_status_completed>
         <to>to</to>
@@ -152,7 +152,7 @@
         <test_duration_completed>Completed after full duration</test_duration_completed>
         <test_duration_header>Test duration</test_duration_header>
         <test_not_started_text>This test has not yet started.</test_not_started_text>
-        <test_percent_to_participations_divider> / Current number of participants is </test_percent_to_participations_divider>
+        <test_percent_to_participations_divider>  </test_percent_to_participations_divider>
         <test_scheduled>It is scheduled to begin </test_scheduled>
         <test_status_completed>Test completed, now go on and pick a winner...</test_status_completed>
         <test_status_not_started>Test has not yet started. </test_status_not_started>
@@ -214,7 +214,7 @@
         <test_duration_completed>Completed after full duration</test_duration_completed>
         <test_duration_header>Test duration</test_duration_header>
         <test_not_started_text>This test has not yet started.</test_not_started_text>
-        <test_percent_to_participations_divider> / Current number of participants is </test_percent_to_participations_divider>
+        <test_percent_to_participations_divider>  </test_percent_to_participations_divider>
         <test_scheduled>It is scheduled to begin </test_scheduled>
         <test_status_completed>Test complete. Pick a winner.</test_status_completed>
         <test_status_not_started>Test has not yet started. </test_status_not_started>
