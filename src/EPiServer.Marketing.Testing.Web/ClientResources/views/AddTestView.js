@@ -280,7 +280,7 @@
 
                     kpiuiElement.addOption(defaultOption);
                     for (var x = 0; x < kpiList.length; x++) {
-                        var option = { value: x.toString(), label: kpiList[x].kpi.friendlyName };
+                        var option = { value: x.toString(), label: (kpiList[x].kpi.friendlyName == "Landing Page" ? "Page View" : kpiList[x].kpi.friendlyName) };
                         kpiuiElement.addOption(option);
                     }
                 }

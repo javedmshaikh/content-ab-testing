@@ -175,7 +175,8 @@
             this._clearKpiMarkup(kpiuiElement);
 
             for (var x = 0; x < this.context.data.test.kpiInstances.length; x++) {
-                var goalsFriendlyName = DomConstruct.toDom("<label class='epi-kpiLabel-bold'>" + this.context.data.test.kpiInstances[x].friendlyName + "</label>");
+                var friendlyName = (this.context.data.test.kpiInstances[x].friendlyName == "Landing Page" ? "Page View" : this.context.data.test.kpiInstances[x].friendlyName);
+                var goalsFriendlyName = DomConstruct.toDom("<label class='epi-kpiLabel-bold'>" + friendlyName + "</label>");
                 var goalsDescription = DomConstruct.toDom("<P>" + this.context.data.test.kpiInstances[x].description + "</p>");
 
                 var goalsContent = new ContentPane({

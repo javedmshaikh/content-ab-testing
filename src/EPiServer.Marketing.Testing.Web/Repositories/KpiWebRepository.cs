@@ -40,7 +40,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             foreach (Type t in KpiTypes)
             {
                 if (t.Name == "ContentComparatorKPI") // Ignore other two kpi's for now
-                    kpiData.Add(new KpiTypeModel() {kpi = Activator.CreateInstance(t) as IKpi, kpiType = (t.AssemblyQualifiedName == "Landing Page" ? "Page View" : "Page View")});
+                    kpiData.Add(new KpiTypeModel() {kpi = Activator.CreateInstance(t) as IKpi, kpiType = t.AssemblyQualifiedName});
             }
             return kpiData;
         }

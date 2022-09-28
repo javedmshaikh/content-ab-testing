@@ -385,7 +385,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                 // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Get);//DataFormat.Json);
                 //sleep for 3 seconds before checking if flag is created asynchronously...
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(1500);
                 var existingAttributesResponse = await client.GetAsync(request);
                 if (!existingAttributesResponse.IsSuccessful)
                 {
@@ -403,7 +403,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     request.AddJsonBody(data);
                     var response = await client.PatchAsync(request);
                     //sleep for 3 second just to make sure Flag is created asynchronously
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(2500);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
