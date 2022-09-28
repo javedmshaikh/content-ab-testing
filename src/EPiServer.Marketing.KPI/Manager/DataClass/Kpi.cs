@@ -51,11 +51,18 @@ namespace EPiServer.Marketing.KPI.Manager.DataClass
                     {
                         return LocalizationService.Current.GetString(attr.text_id);
                     }
-                    return attr.text;
+
+                    if (attr.text == "Landing Page")
+                        return "Page View";
+                    else
+                        return attr.text;
                 }
                 else
                 {
-                    return GetType().Name;
+                    if (GetType().Name == "Landing Page")
+                        return "Page View";
+                    else
+                        return GetType().Name
                 }
             }
         }
