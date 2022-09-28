@@ -16,11 +16,11 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
         //bool CreateOrUpdateEvent(string key, OptiEvent.Types type = OptiEvent.Types.Other, string description = null);
         bool CreateEventIfNotExists(OptiEvent opEvent, out long EventID);
 
-        bool CreateOrUpdateFlag(OptiFlag optiFlag);
+        Task<bool> CreateOrUpdateFlag(OptiFlag optiFlag);
 
-        bool CreateFlagRuleSet(List<OptiFlagRulesSet> ruleSet);
+        Task<bool> CreateFlagRuleSet(List<OptiFlagRulesSet> ruleSet);
 
-        bool EnableExperiment();
+        Task<bool> EnableExperiment();
 
         bool DisableExperiment(string FlagKey);
         List<OptiFeature> GetFeatureList();

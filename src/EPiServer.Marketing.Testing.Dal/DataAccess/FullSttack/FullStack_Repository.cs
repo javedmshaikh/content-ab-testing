@@ -165,7 +165,7 @@ namespace EPiServer.Marketing.Testing.Dal
             _restOptions.VersionId = 1;
             _expClient = new ExperimentationClient(_restOptions);
             var _experimentCreated = _expClient.CreateFlagRuleSet(ruleSetLists);
-            var _experimentStarted = EnableExperiment();
+            //var _experimentStarted = EnableExperiment();
 
             List<string> keyList = new List<string>();
             keyList.Add(flagKey);
@@ -173,12 +173,12 @@ namespace EPiServer.Marketing.Testing.Dal
             return keyList;
         }
 
-        public bool EnableExperiment()
-        {
-            var _experimentStarted = _expClient.EnableExperiment();
+        //public bool EnableExperiment()
+        //{
+        //    var _experimentStarted = _expClient.EnableExperiment();
 
-            return _experimentStarted;
-        }
+        //    return (bool)_experimentStarted.Result;
+        //}
 
         public bool DisableExperiment(string flagKey)
         {

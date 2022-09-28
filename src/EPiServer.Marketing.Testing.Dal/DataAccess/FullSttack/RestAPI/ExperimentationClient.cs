@@ -209,7 +209,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
             }
         }
 
-        public bool CreateOrUpdateFlag(OptiFlag optiFlag)
+        public async Task<bool> CreateOrUpdateFlag(OptiFlag optiFlag)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {
@@ -225,7 +225,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
                 // Get a list of existing attributes
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{optiFlag.Key}", Method.Get);//DataFormat.Json);
-                var existingAttributesResponse = client.Get(request);
+                var existingAttributesResponse = await client.GetAsync(request);
 
                 var existingFlag = JsonConvert.DeserializeObject<OptiFlag>(existingAttributesResponse.Content);
                 //var item = existingFlag.FirstOrDefault(x => x.Key == optiFlag.Key);
@@ -235,7 +235,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     //var data = new { key = optiFlag.Key, name = optiFlag.Name, description = optiFlag.Description ?? "" , outlier_filtering_enabled = false, variable_definitions = optiFlag.VariableDefinition };
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Post);//DataFormat.Json);
                     request.AddJsonBody(data);
-                    var response = client.Post(request);
+                    var response = await client.PostAsync(request);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
@@ -255,7 +255,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     var data = JsonConvert.SerializeObject(flagsToUpdate.ToArray());
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags", Method.Patch);//DataFormat.Json);
                     request.AddJsonBody(data);
-                    var response = client.Patch(request);
+                    var response = await client.PatchAsync(request);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
@@ -272,7 +272,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
         }
 
 
-        public bool EnableExperiment()
+        public async Task<bool> EnableExperiment()
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {
@@ -287,15 +287,12 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                 // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset/enabled", Method.Post);//DataFormat.Json);
                     
-                    var response = client.Post(request);
+                    var response = await client.PostAsync(request);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
                         return false;
                     }
-               
-                //var projectConfig = ServiceLocator.Current.GetInstance<ExperimentationProjectConfigManager>();
-                //projectConfig.PollNow();
 
                 return true;
             }
@@ -371,7 +368,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                 return false;
             }
         }
-        public bool CreateFlagRuleSet(List<OptiFlagRulesSet> optiFlagRuleSet)
+        public async Task<bool> CreateFlagRuleSet(List<OptiFlagRulesSet> optiFlagRuleSet)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {
@@ -387,7 +384,9 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
                 // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Get);//DataFormat.Json);
-                var existingAttributesResponse = client.Get(request);
+                //sleep for 3 seconds before checking if flag is created asynchronously...
+                System.Threading.Thread.Sleep(1000);
+                var existingAttributesResponse = await client.GetAsync(request);
                 if (!existingAttributesResponse.IsSuccessful)
                 {
                     //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {existingAttributesResponse.ResponseStatus}");
@@ -396,18 +395,21 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
                 var existingFlag = JsonConvert.DeserializeObject<OptiFetchFlagRuleSet>(existingAttributesResponse.Content);
                 //if data is found in ruleset, don't do anything.
-                if (string.IsNullOrEmpty(existingFlag.url))
+                if (existingFlag.rule_priorities.Count == 0)
                 {
                     var data = JsonConvert.SerializeObject(optiFlagRuleSet.ToArray());
                     data = data.ToString().Replace("ValueClass", "value");
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
                     request.AddJsonBody(data);
-                    var response = client.Patch(request);
+                    var response = await client.PatchAsync(request);
+                    //sleep for 3 second just to make sure Flag is created asynchronously
+                    System.Threading.Thread.Sleep(2000);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
                         return false;
                     }
+                    EnableExperiment();
                 }
                 else
                 {
