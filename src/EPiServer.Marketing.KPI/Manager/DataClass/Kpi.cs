@@ -62,7 +62,7 @@ namespace EPiServer.Marketing.KPI.Manager.DataClass
                     if (GetType().Name == "Landing Page")
                         return "Page View";
                     else
-                        return GetType().Name
+                        return GetType().Name;
                 }
             }
         }
