@@ -409,43 +409,38 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
                         return false;
                     }
-                    EnableExperiment();
                 }
                 else
                 {
                     //Flag Ruleset already exists, set op to replace and run patch command
-                    //var updatedRuleSet = existingFlag;
-                    //updatedRuleSet.Op = "replace";
-                    //OptiFlagRulesSet optiflagruleset2 = new OptiFlagRulesSet()
-                    //{
 
-                    //    Op = "replace",
-                    //    Path = "/rule_priorities/0",
-                    //    ValueClass = null,
-                    //    value = _restOptions.FlagKey
+                    OptiUpdateFlagRuleSet frs1 = new OptiUpdateFlagRuleSet();
+                    frs1.Op = "replace";
+                    frs1.Path = "/rules/" + existingFlag.rule_priorities[0] + "/percentage_included";
+                    frs1.Value = optiFlagRuleSet[0].ValueClass.PercentageIncluded.ToString();
 
-                    //};
+                    OptiUpdateFlagRuleSet frs2 = new OptiUpdateFlagRuleSet();
+                    frs2.Op = "replace";
+                    frs2.Path = "/rules/" + existingFlag.rule_priorities[0] + "/description";
+                    frs2.Value = optiFlagRuleSet[0].ValueClass.Description;
 
+                    List<OptiUpdateFlagRuleSet> ruleSetLists = new List<OptiUpdateFlagRuleSet>();
+                    ruleSetLists.Add(frs1);
+                    ruleSetLists.Add(frs2);
 
-                    //List<OptiFlagRulesSet> ruleSetLists = new List<OptiFlagRulesSet>();
-                    //ruleSetLists.Add(updatedRuleSet);
-                    //ruleSetLists.Add(optiflagruleset2);
-
-                    
-                    //updatedRuleSet.Op = "replace";
-                    ////updatedRuleSet.ValueClass.op
-                    //var data = JsonConvert.SerializeObject(ruleSetLists.ToArray());
-                    //data = data.ToString().Replace("ValueClass", "value");
-                    //request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
-                    //request.AddJsonBody(data);
-                    //var response = client.Patch(request);
-                    //if (!response.IsSuccessful)
-                    //{
-                    //    //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
-                    //    return false;
-                    //}
+                    var data = JsonConvert.SerializeObject(ruleSetLists.ToArray());
+                    request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
+                    request.AddJsonBody(data);
+                    var response = client.Patch(request);
+                    if (!response.IsSuccessful)
+                    {
+                        //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
+                        return false;
+                    }
                 }
-                
+
+
+                EnableExperiment();
                 return true;
             }
             catch (Exception e)
