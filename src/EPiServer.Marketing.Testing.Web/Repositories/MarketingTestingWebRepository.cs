@@ -498,6 +498,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
 
         public void IncrementCount(Guid testId, int itemVersion, CountType resultType, Guid kpiId = default(Guid), bool async = true)
         {
+            var currentTest = GetTestById(testId, false);
             var sessionid = _httpContextHelper.GetRequestParam(_httpContextHelper.GetSessionCookieName());
             var c = new IncrementCountCriteria()
             {
@@ -518,7 +519,13 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 /// user ended up on the landing page
                 /// call page track event
                 /// 
-                _fsSDKClient.Service.TrackPageViewEvent("page_view", itemVersion);
+                var pageViewEventName = string.Empty;
+                if (currentTest != null)
+                {
+                    pageViewEventName = "page_view_" + currentTest.FS_FlagKey.Replace("_Flag", "");
+                }
+
+                _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);
             }
             _testManager.IncrementCount(c);
         }
