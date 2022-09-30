@@ -225,7 +225,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
                 // Get a list of existing attributes
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{optiFlag.Key}", Method.Get);//DataFormat.Json);
-                var existingAttributesResponse = await client.GetAsync(request);
+                var existingAttributesResponse = client.Get(request);
 
                 var existingFlag = JsonConvert.DeserializeObject<OptiFlag>(existingAttributesResponse.Content);
                 //var item = existingFlag.FirstOrDefault(x => x.Key == optiFlag.Key);
