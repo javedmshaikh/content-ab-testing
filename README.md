@@ -2,10 +2,10 @@
 
 This version of CMS AB Testing connects to Optimizely Full Stack and creates A/B Testing experimentation in Full Stack. When a conversion is made, Metrics is also updated in Full Stack. Results of Metrics is displayed from Full Stack into AB Test view within CMS.
 
-## Start AB Test in CMS
+## Start AB Test (Experiment) in CMS
 Test is created in Full Stack with Experimentation. Event with page title is created to track Metrics.
 
-## User Lands on AB Test Page in CMS
+## User Lands on AB Test (Experiment) Page in CMS
 When user lands on AB Test page of CMS, Page Tracking event is called passing user context. User is assigned either variation A (ON) or variation B (OFF) version of the test page. 
 
 * Variation “On” maps to New Draft version of AB Test Page.
@@ -14,7 +14,7 @@ When user lands on AB Test page of CMS, Page Tracking event is called passing us
 ## User navigates to conversion page in CMS
 When same user navigates to conversion page from AB Test page, Experimentation decision is made and is logged in Metrics in experimentation results. Same Metrics is visible from within CMS.
 
-## Abort AB Test
+## Abort AB Test (Experiment)
 When Test is aborted, it is deleted from CMS and Experimentation is switched off in Optimizely Full Stack.
 
 ## Publish Winner
