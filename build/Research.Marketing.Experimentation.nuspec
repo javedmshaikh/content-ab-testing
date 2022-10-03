@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Research.Marketing.Experimentation</id>
-    <version>0.1.6</version>
+    <version>0.1.7</version>
     <title>Optimizely Marketing Experimentation Tools</title>
     <authors>Optimizely Presales</authors>
     <owners>Optimizely Presales</owners>

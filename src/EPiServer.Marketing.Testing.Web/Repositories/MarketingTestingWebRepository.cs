@@ -522,7 +522,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 var pageViewEventName = string.Empty;
                 if (currentTest != null)
                 {
-                    pageViewEventName = "page_view_" + currentTest.FS_FlagKey.Replace("_Flag", "");
+                    pageViewEventName = "page_view_" + currentTest.FS_FlagKey.Replace("_Experiment_Flag", "");
                 }
 
                 _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);

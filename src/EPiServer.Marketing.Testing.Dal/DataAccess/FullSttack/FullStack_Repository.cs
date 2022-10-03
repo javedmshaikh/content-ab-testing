@@ -90,7 +90,7 @@ namespace EPiServer.Marketing.Testing.Dal
 
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
 
-            var eventNameEnding = options.Value.EventName + "_" + Title.Replace(" ", "_");
+            var eventNameEnding = options.Value.EventName + "_" + Title.Replace(" ", "_").Substring(0, Title.Length - 11);
             OptiEvent opEvent = new OptiEvent();
             opEvent.Key = eventNameEnding;
             opEvent.Description = options.Value.EventDescription + ", " + Title;
