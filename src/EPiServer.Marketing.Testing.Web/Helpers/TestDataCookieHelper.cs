@@ -82,7 +82,8 @@ namespace EPiServer.Marketing.Testing.Web.Helpers
                 {"start", aTest.StartDate.ToString(CultureInfo.InvariantCulture)},
                 {"vId", varIndex.ToString()},
                 {"viewed", testData.Viewed.ToString()},
-                {"converted", testData.Converted.ToString()}
+                {"converted", testData.Converted.ToString()},
+                {"FullStackUserGUID", testData.FullStackUserGUID.ToString() }
             };
             var option = new CookieOptions()
             {
@@ -144,7 +145,10 @@ namespace EPiServer.Marketing.Testing.Web.Helpers
                     retCookie.TestStart = DateTime.Parse(cookieData["start"]);
                     retCookie.Viewed = bool.TryParse(cookieData["viewed"], out outval) ? outval : false;
                     retCookie.Converted = bool.TryParse(cookieData["converted"], out outval) ? outval : false;
-
+                    Guid FullStackUserGUID;
+                    if (cookieData.ContainsKey("FullStackUserGUID")) { 
+                        retCookie.FullStackUserGUID = Guid.TryParse(cookieData["FullStackUserGUID"], out FullStackUserGUID) ? FullStackUserGUID : new Guid();
+                    }
                     var test = _testRepo.GetActiveTestsByOriginalItemId(retCookie.TestContentId, currentCulture).FirstOrDefault();
 
                     if (test != null && retCookie.TestStart.ToString(CultureInfo.InvariantCulture) == test.StartDate.ToString(CultureInfo.InvariantCulture))

@@ -289,6 +289,8 @@ namespace EPiServer.Marketing.Testing.Web
             testCookieData.TestContentId = activeTest.OriginalItemId;
             testCookieData.TestVariantId = newVariant.Id;
 
+            if (testCookieData.FullStackUserGUID == Guid.Empty)
+                testCookieData.FullStackUserGUID = Guid.NewGuid();
             foreach (var kpi in activeTest.KpiInstances)
             {
                 testCookieData.KpiConversionDictionary.Add(kpi.Id, false);

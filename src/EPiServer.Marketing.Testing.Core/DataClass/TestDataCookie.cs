@@ -31,6 +31,11 @@ namespace EPiServer.Marketing.Testing.Core.DataClass
         public Guid TestVariantId { get; set; }
 
         /// <summary>
+        /// ID of item variant being tested.
+        /// </summary>
+        public Guid FullStackUserGUID { get; set; }
+
+        /// <summary>
         /// States whether the current user sees the original item or the variant being tested.
         /// </summary>
         public bool ShowVariant { get; set; }

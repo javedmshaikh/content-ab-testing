@@ -25,6 +25,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
         private Guid _inactiveTestId = Guid.Parse("5e2f21e3-30f7-4dcf-89cd-b9d7ff8c7cd6");
         private Guid _testContentGuid = Guid.Parse("6d532659-006d-453b-b7f4-62a94b2f3a3c");
         private Guid _testVariantGuid = Guid.Parse("9226a971-605c-4fd7-8a5c-aa7873e1e818");
+        private Guid _fullStackGUID = new Guid("a19221d7-b977-4f90-b256-2e6b3cfd8786");
         private DateTime _testEndDateTime = DateTime.Parse("5/5/2050");
         private string _cookieDelimeter = "_";
         private IMarketingTest _activeTest;
@@ -223,13 +224,15 @@ namespace EPiServer.Marketing.Testing.Test.Web
                 Id = Guid.Parse("a19221d7-b977-4f90-b256-2e6b3cfd8216"),
             };
 
+            Guid fullStackGUID = new Guid("a19221d7-b977-4f90-b256-2e6b3cfd8786");
             var testCookie = new Dictionary<string, string>()
             {
                 {"start", startDate.ToString()},
                 {"vId", "1"},
                 {"viewed", "false"},
                 {"converted", "false"},
-                {"k0", true.ToString()}
+                {"k0", true.ToString()},
+                {"FullStackUserGUID", fullStackGUID.ToString() }
             }.ToLegacyCookieString();
 
             var test = new ABTest()
@@ -257,6 +260,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
             Assert.True(returnCookieData.TestVariantId == variant2.Id);
             Assert.False(returnCookieData.Viewed);
             Assert.False(returnCookieData.Converted);
+            Assert.True(returnCookieData.FullStackUserGUID == fullStackGUID);
         }
 
         [Fact]
@@ -409,6 +413,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
             var mockTestDataCookiehelper = GetUnitUnderTest();
             var variant1Guid = Guid.Parse("dee37c30-973b-4e48-9b59-148a6a730ed9");
             var variant2Guid = Guid.Parse("a19221d7-b977-4f90-b256-2e6b3cfd8216");
+            var fullStackUserGUID = Guid.Parse("a19221d7-b977-4f90-b256-2e6b3cfd8786");
             var startDate = DateTime.Now.AddDays(-2);
             var tdCookie = new TestDataCookie()
             {
@@ -417,7 +422,8 @@ namespace EPiServer.Marketing.Testing.Test.Web
                 TestVariantId = variant1Guid,
                 ShowVariant = true,
                 Viewed = true,
-                Converted = false
+                Converted = false,
+                FullStackUserGUID = fullStackUserGUID
             };
 
             _activeTest.Variants = new List<Variant>()
@@ -438,6 +444,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => int.Parse(c.FromLegacyCookieString()["vId"]) == 0), It.IsAny<CookieOptions>()));
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => bool.Parse(c.FromLegacyCookieString()["viewed"]) == tdCookie.Viewed), It.IsAny<CookieOptions>()));
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => bool.Parse(c.FromLegacyCookieString()["converted"]) == tdCookie.Converted), It.IsAny<CookieOptions>()));
+            _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => Guid.Parse(c.FromLegacyCookieString()["FullStackUserGUID"]) == tdCookie.FullStackUserGUID), It.IsAny<CookieOptions>()));
         }
 
         [Fact]
@@ -457,7 +464,8 @@ namespace EPiServer.Marketing.Testing.Test.Web
                 TestVariantId = _testVariantGuid,
                 ShowVariant = true,
                 Viewed = true,
-                Converted = false
+                Converted = false,
+                FullStackUserGUID = _fullStackGUID
             };
 
             tdCookie.KpiConversionDictionary.Add(kpiId, true);
@@ -484,7 +492,8 @@ namespace EPiServer.Marketing.Testing.Test.Web
                 TestVariantId = variant1Guid,
                 ShowVariant = false,
                 Viewed = true,
-                Converted = false
+                Converted = false, 
+                FullStackUserGUID = _fullStackGUID
             };
 
             var updatedCookie = new TestDataCookie()
@@ -494,7 +503,8 @@ namespace EPiServer.Marketing.Testing.Test.Web
                 TestVariantId = variant2Guid,
                 ShowVariant = true,
                 Viewed = false,
-                Converted = true
+                Converted = true,
+                FullStackUserGUID = _fullStackGUID
             };
 
             _activeTest.Variants = new List<Variant>() {
@@ -515,6 +525,7 @@ namespace EPiServer.Marketing.Testing.Test.Web
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => int.Parse(c.FromLegacyCookieString()["vId"]) == 1), It.IsAny<CookieOptions>()));
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => bool.Parse(c.FromLegacyCookieString()["viewed"]) == updatedCookie.Viewed), It.IsAny<CookieOptions>()));
             _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => bool.Parse(c.FromLegacyCookieString()["converted"]) == updatedCookie.Converted), It.IsAny<CookieOptions>()));
+            _httpContextHelper.Verify(hch => hch.AddCookie(It.IsAny<string>(), It.Is<string>(c => Guid.Parse(c.FromLegacyCookieString()["FullStackUserGUID"]) == updatedCookie.FullStackUserGUID), It.IsAny<CookieOptions>()));
         }
 
         [Fact]

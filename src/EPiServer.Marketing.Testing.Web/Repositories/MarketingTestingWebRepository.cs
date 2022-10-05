@@ -476,7 +476,14 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
         {
             var currentTest = _testManager.Get(testId);//gets the information of test
             string variationKey = string.Empty;
-
+            var cookieHelper = _serviceLocator.GetInstance<ITestDataCookieHelper>();
+            var testCookie = cookieHelper.GetTestDataFromCookie(currentTest.OriginalItemId.ToString(), currentTest.ContentLanguage);
+            if (testCookie.FullStackUserGUID == Guid.Empty)
+            {
+                testCookie.TestId = testId;
+                testCookie.FullStackUserGUID = Guid.NewGuid();
+                cookieHelper.SaveTestDataToCookie(testCookie);
+            }
             var decisionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey);
             if (decisionMade == true && !string.IsNullOrEmpty(variationKey)) // No errors happened and variation is decided
             {
@@ -524,7 +531,14 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 {
                     pageViewEventName = "page_view_" + currentTest.FS_FlagKey.Replace("_Experiment_Flag", "");
                 }
-
+                var cookieHelper = _serviceLocator.GetInstance<ITestDataCookieHelper>();
+                var testCookie = cookieHelper.GetTestDataFromCookie(currentTest.OriginalItemId.ToString(), currentTest.ContentLanguage);
+                if (testCookie.FullStackUserGUID == Guid.Empty)
+                {
+                    testCookie.FullStackUserGUID = Guid.NewGuid();
+                    cookieHelper.SaveTestDataToCookie(testCookie);
+                }
+                testCookie = cookieHelper.GetTestDataFromCookie(currentTest.OriginalItemId.ToString(), currentTest.ContentLanguage);
                 _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);
             }
             _testManager.IncrementCount(c);

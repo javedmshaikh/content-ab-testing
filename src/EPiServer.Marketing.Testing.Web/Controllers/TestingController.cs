@@ -219,6 +219,8 @@ namespace EPiServer.Marketing.Testing.Web.Controllers
 
                         // only update cookie if all kpi's have converted
                         testCookie.Converted = testCookie.KpiConversionDictionary.All(x => x.Value);
+                        if (testCookie.FullStackUserGUID == null)
+                            testCookie.FullStackUserGUID = new Guid();
                         cookieHelper.UpdateTestDataCookie(testCookie);
                         responseMessage = Ok("Conversion Successful");
                     }
