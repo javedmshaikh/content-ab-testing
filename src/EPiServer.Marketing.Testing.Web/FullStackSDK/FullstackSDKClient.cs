@@ -17,9 +17,9 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
             _httpContext = ServiceLocator.Current.GetInstance<IHttpContextAccessor>().HttpContext;
         }
 
-        public bool TrackPageViewEvent(string eventName, int itemVersion)
+        public bool TrackPageViewEvent(string eventName, int itemVersion, string fullStackUserGUID)
         {
-            var userContext = GetUserContext();
+            var userContext = GetUserContext(fullStackUserGUID);
             if (userContext == null)
                 return false;
 
@@ -27,9 +27,9 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 
             return true;
         }
-        public bool LogUserDecideEvent(string flagName, out string variationKey)
+        public bool LogUserDecideEvent(string flagName, out string variationKey, string fullStackUserGUID)
         {
-            var userContext = GetUserContext();
+            var userContext = GetUserContext(fullStackUserGUID);
             if (userContext == null)
             {
                 variationKey = string.Empty;
@@ -42,16 +42,16 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
             return true;
         }
 
-        private OptimizelySDK.OptimizelyUserContext GetUserContext()
+        private OptimizelySDK.OptimizelyUserContext GetUserContext(string fullStackUserGUID)
         {
-            var userInCookie = _cookieService.Get("FullStackUserGUID");
+            //var userInCookie = _cookieService.Get("FullStackUserGUID");
 
-            if (string.IsNullOrEmpty(userInCookie)) {
-                userInCookie = Guid.NewGuid().ToString();
-                _cookieService.Set("FullStackUserGUID", userInCookie);
-            }
+            //if (string.IsNullOrEmpty(userInCookie)) {
+            //    userInCookie = Guid.NewGuid().ToString();
+            //    _cookieService.Set("FullStackUserGUID", userInCookie);
+            //}
             var client = FSExpClient.Get.Value;
-            var user = client.CreateUserContext(userInCookie, null);
+            var user = client.CreateUserContext(fullStackUserGUID, null);
 
             return user;
         }

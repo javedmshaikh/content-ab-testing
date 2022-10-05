@@ -482,9 +482,9 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
             {
                 testCookie.TestId = testId;
                 testCookie.FullStackUserGUID = Guid.NewGuid();
-                cookieHelper.SaveTestDataToCookie(testCookie);
+                //cookieHelper.SaveTestDataToCookie(testCookie);
             }
-            var decisionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey);
+            var decisionMade = _fsSDKClient.Service.LogUserDecideEvent(currentTest.FS_FlagKey, out variationKey, testCookie.FullStackUserGUID.ToString());
             if (decisionMade == true && !string.IsNullOrEmpty(variationKey)) // No errors happened and variation is decided
             {
                 var variantLandingPage = _testManager.ReturnLandingPage(testId, variationKey);
@@ -536,10 +536,10 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 if (testCookie.FullStackUserGUID == Guid.Empty)
                 {
                     testCookie.FullStackUserGUID = Guid.NewGuid();
-                    cookieHelper.SaveTestDataToCookie(testCookie);
+                    //cookieHelper.SaveTestDataToCookie(testCookie);
                 }
                 testCookie = cookieHelper.GetTestDataFromCookie(currentTest.OriginalItemId.ToString(), currentTest.ContentLanguage);
-                _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);
+                _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion, testCookie.FullStackUserGUID.ToString());
             }
             _testManager.IncrementCount(c);
         }
