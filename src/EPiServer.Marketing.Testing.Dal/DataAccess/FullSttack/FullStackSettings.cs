@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Configuration;
 using EPiServer.ServiceLocation;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 
 namespace EPiServer.Marketing.Testing.Dal
 {
@@ -15,18 +16,18 @@ namespace EPiServer.Marketing.Testing.Dal
 
         public int CacheInMinutes { get; set; } = 10;
 
-        public string RestAuthToken { get; set; } = "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
+        public string RestAuthToken { get; set; } = "";
 
-        public string ProjectId { get; set; } = "21972070188";
+        public string ProjectId { get; set; } = FullStackConstants.ProjectId;
 
-        public string EnviromentKey { get; set; } = "production";
+        public string EnviromentKey { get; set; } = FullStackConstants.EnviromentKey;
 
-        public string SDKKey { get; set; } = "3nE7rXHmg255uLXhDvWRC";
+        public string SDKKey { get; set; } = "";
 
-        public int APIVersion { get; set; } = 1;
+        public int APIVersion { get; set; } = FullStackConstants.APIVersion;
 
-        public string EventName { get; set; } = "page_view";
+        public string EventName { get; set; } = FullStackConstants.EventName;
 
-        public string EventDescription { get; set; } = "Event to calculate page view metrics";
+        public string EventDescription { get; set; } = FullStackConstants.EventDescription;
     }
 }

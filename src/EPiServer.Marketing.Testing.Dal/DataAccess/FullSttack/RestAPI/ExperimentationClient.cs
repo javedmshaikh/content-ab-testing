@@ -1,5 +1,6 @@
 ﻿using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack.Core.Impl.Models;
 using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
@@ -356,7 +357,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     return false;
                 }
                 var jsonContent = existingAttributesResponse.Content;
-                jsonContent = jsonContent.Replace(experimentKey, "AB_Test_Experiment");
+                jsonContent = jsonContent.Replace(experimentKey, FullStackConstants.ReplaceABTestExperiment);
                 if (!jsonContent.Contains(experimentKey))
                     fetchedFlagRuleSet = JsonConvert.DeserializeObject<OptiFetchFlagRuleSet>(jsonContent);
 

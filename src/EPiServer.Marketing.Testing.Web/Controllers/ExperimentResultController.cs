@@ -44,7 +44,7 @@ namespace EPiServer.Marketing.Testing.Web.Controllers
                 OptiExperimentResults opResults = new OptiExperimentResults();
                 if (newfetchedRuleSet.rules != null)
                 {
-                    long ExperimentID = GetExeperimentIDFromURL(newfetchedRuleSet.rules.AB_Test_Experiment.fetch_results_ui_url);
+                    long ExperimentID = GetExeperimentIDFromURL(newfetchedRuleSet.rules.AB_Test_Experiment?.fetch_results_ui_url);
                     _restOptions.ExperimentID = ExperimentID;
                     _restOptions.VersionId = 2;
                     _expClient = new ExperimentationClient(_restOptions);

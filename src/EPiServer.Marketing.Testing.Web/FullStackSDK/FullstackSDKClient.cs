@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using OptimizelySDK.Entity;
 using System;
 using EPiServer.Marketing.Testing.Web.Helpers;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 
 namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 {
@@ -44,11 +45,11 @@ namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 
         private OptimizelySDK.OptimizelyUserContext GetUserContext()
         {
-            var userInCookie = _cookieService.Get("FullStackUserGUID");
+            var userInCookie = _cookieService.Get(FullStackConstants.FullStackUserGUID);
 
             if (string.IsNullOrEmpty(userInCookie)) {
                 userInCookie = Guid.NewGuid().ToString();
-                _cookieService.Set("FullStackUserGUID", userInCookie);
+                _cookieService.Set(FullStackConstants.FullStackUserGUID, userInCookie);
             }
             var client = FSExpClient.Get.Value;
             var user = client.CreateUserContext(userInCookie, null);

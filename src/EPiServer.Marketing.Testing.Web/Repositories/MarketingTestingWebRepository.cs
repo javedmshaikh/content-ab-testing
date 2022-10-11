@@ -24,6 +24,7 @@ using EPiServer.Marketing.Testing.Core;
 using Microsoft.Extensions.Options;
 using EPiServer.Marketing.Testing.Web.FullStackSDK;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 
 namespace EPiServer.Marketing.Testing.Web.Repositories
 {
@@ -522,7 +523,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 var pageViewEventName = string.Empty;
                 if (currentTest != null)
                 {
-                    pageViewEventName = "page_view_" + currentTest.FS_FlagKey.Replace("_Experiment_Flag", "");
+                    pageViewEventName = FullStackConstants.EventName + currentTest.FS_FlagKey.Replace(FullStackConstants.ReplaceExperimentFlag, "");
                 }
 
                 _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);
