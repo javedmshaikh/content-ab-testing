@@ -22,7 +22,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
 
         Task<bool> EnableExperiment();
 
-        bool DisableExperiment(string FlagKey);
+        Task<bool> DisableExperiment(string FlagKey);
         List<OptiFeature> GetFeatureList();
         List<OptiAttribute> GetAttributeList();
         List<OptiEvent> GetEventList();

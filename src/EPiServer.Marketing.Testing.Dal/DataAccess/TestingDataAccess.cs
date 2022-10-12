@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 using EPiServer.Marketing.Testing.Dal.EntityModel;
 using EPiServer.Marketing.Testing.Dal.EntityModel.Enums;
 using EPiServer.Marketing.Testing.Dal.Exceptions;
@@ -287,8 +288,10 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess
             if (test == null)
             {
                 var keyList = _fsRepo1.AddExperiment(testObject);
-                testObject.FS_FlagKey = keyList[0];
-                testObject.FS_ExperimentKey = keyList[1];
+                var flagKey = FullStackConstants.GetFlagKey(testObject.Title);
+                var experimentKey = FullStackConstants.GetExperimentKey(testObject.Title);
+                testObject.FS_FlagKey = flagKey;
+                testObject.FS_ExperimentKey = experimentKey;
                 repo.Add(testObject);
 
                 

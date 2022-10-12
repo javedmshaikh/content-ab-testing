@@ -3,6 +3,7 @@ using EPiServer.Marketing.Testing.Dal.DataAccess;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Config;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.Core.Impl.Models;
 using EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI;
+using EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack;
 using EPiServer.Marketing.Testing.Dal.EntityModel;
 using EPiServer.ServiceLocation;
 using Microsoft.Extensions.Options;
@@ -39,11 +40,11 @@ namespace EPiServer.Marketing.Testing.Dal
             return new OptiFlag();
         }
 
-        public List<string> AddExperiment(DalABTest objABTest)
+        public Task<List<string>> AddExperiment(DalABTest objABTest)
         {
 
             //Console.WriteLine("Create AB Test FLAG");
-            var flagKey = objABTest.Title.Replace(" ", "_").Replace("/","") + "_Flag";
+            var flagKey = FullStackConstants.GetFlagKey(objABTest.Title);// objABTest.Title.Replace(" ", "_").Replace("/","") + "_Flag";
             string Title = objABTest.Title.Replace("/","");
             string Description = objABTest.Description.Replace("/", "");
             int participationPercentage = Math.Abs(objABTest.ParticipationPercentage * 100);
@@ -54,22 +55,22 @@ namespace EPiServer.Marketing.Testing.Dal
             optiFlag.Key = flagKey;
 
             Variable contentGuid = new Variable();
-            contentGuid.Key = "content_guid";
-            contentGuid.Description = "Guid of content";
-            contentGuid.Type = "string";
+            contentGuid.Key = FullStackConstants.ContentGUIDKey;
+            contentGuid.Description = FullStackConstants.ContentGUIDDesc;
+            contentGuid.Type = FullStackConstants.ContentGUIDType;
             contentGuid.DefaultValue = objABTest.OriginalItemId.ToString();
 
             Variable draftVersion = new Variable();
-            draftVersion.Key = "draft_version";
-            draftVersion.Description = "Draft version of content";
-            draftVersion.Type = "integer";
-            draftVersion.DefaultValue = "0";
+            draftVersion.Key = FullStackConstants.DraftVersionKey;
+            draftVersion.Description = FullStackConstants.DraftVersionDesc;
+            draftVersion.Type = FullStackConstants.DraftVersionType;
+            draftVersion.DefaultValue = FullStackConstants.DraftVersionDefault;
 
             Variable publishedVersion = new Variable();
-            publishedVersion.Key = "published_version";
-            publishedVersion.Description = "Published version of content";
-            publishedVersion.Type = "integer";
-            publishedVersion.DefaultValue = "0";
+            publishedVersion.Key = FullStackConstants.PublishedVersionKey;
+            publishedVersion.Description = FullStackConstants.PublishedVersionDesc;
+            publishedVersion.Type = FullStackConstants.DraftVersionType;
+            publishedVersion.DefaultValue = FullStackConstants.DraftVersionDefault;
 
 
             //create guid variable
@@ -111,7 +112,7 @@ namespace EPiServer.Marketing.Testing.Dal
             List<Metric> metricLists = new List<Metric>();
             metricLists.Add(metric);
 
-            string experimentKey = objABTest.Title.Replace(" ", "_").Replace("/","") + "_Experiment";
+            string experimentKey = FullStackConstants.GetExperimentKey(objABTest.Title); 
             OptiFlagRulesSet optiflagruleset = new OptiFlagRulesSet()
             {
                 Op = "add",
@@ -170,7 +171,7 @@ namespace EPiServer.Marketing.Testing.Dal
             List<string> keyList = new List<string>();
             keyList.Add(flagKey);
             keyList.Add(experimentKey);
-            return keyList;
+            return Task.FromResult(keyList);
         }
 
         //public bool EnableExperiment()
@@ -189,9 +190,9 @@ namespace EPiServer.Marketing.Testing.Dal
             _restOptions.VersionId = options.Value.APIVersion;
             _restOptions.Environment = options.Value.EnviromentKey;
             _restOptions.FlagKey = flagKey;
-            var _experimentStarted = _expClient.DisableExperiment(flagKey);
+            _expClient.DisableExperiment(flagKey);
 
-            return _experimentStarted;
+            return true;
         }
 
         public OptiFlagRulesSet GetFlagRuleSet(string experimentKey)

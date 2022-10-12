@@ -21,7 +21,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
     {
         private readonly ExperimentationRestApiOptions _restOptions;
         //private readonly ILogger _logger;
-        private string APIURL = "https://api.optimizely.com/";
+        private string APIURL = FullStackConstants.APIURL;
 
         public ExperimentationClient(ExperimentationRestApiOptions restOptions)
         {
@@ -304,7 +304,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
             }
         }
 
-        public bool DisableExperiment(string FlagKey)
+        public async Task<bool> DisableExperiment(string FlagKey)
         {
             if (string.IsNullOrEmpty(_restOptions.RestAuthToken) || string.IsNullOrEmpty(_restOptions.ProjectId))
             {
@@ -319,7 +319,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                 // Get a list of existing attributes {{base_url}}/projects/{{project_id}}/flags/{{flag_key}}/environments/{{environment_key}}/ruleset
                 var request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{FlagKey}/environments/{_restOptions.Environment}/ruleset/disabled", Method.Post);//DataFormat.Json);
 
-                var response = client.Post(request);
+                var response = await client.PostAsync(request);
                 if (!response.IsSuccessful)
                 {
                     //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
@@ -432,7 +432,7 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullStack.RestAPI
                     var data = JsonConvert.SerializeObject(ruleSetLists.ToArray());
                     request = new RestRequest($"/projects/{_restOptions.ProjectId}/flags/{_restOptions.FlagKey}/environments/{_restOptions.Environment}/ruleset", Method.Patch);//DataFormat.Json);
                     request.AddJsonBody(data);
-                    var response = client.Patch(request);
+                    var response = await client.PatchAsync(request);
                     if (!response.IsSuccessful)
                     {
                         //_logger?.Log(Level.Error, $"Could not query Optimizely. API returned {response.ResponseStatus}");
