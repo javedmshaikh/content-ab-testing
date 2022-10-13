@@ -91,11 +91,12 @@ namespace EPiServer.Marketing.Testing.Dal
 
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
 
-            var eventNameEnding = options.Value.EventName + "_" + Title.Replace(" ", "_").Substring(0, Title.Length - 11);
+            //var eventNameEnding = options.Value.EventName + "_" + Title.Replace(" ", "_").Substring(0, Title.Length - 11);
+            var eventName = FullStackConstants.GetEventName(flagKey);
             OptiEvent opEvent = new OptiEvent();
-            opEvent.Key = eventNameEnding;
+            opEvent.Key = eventName;
             opEvent.Description = options.Value.EventDescription + ", " + Title;
-            opEvent.Name = eventNameEnding;
+            opEvent.Name = eventName;
             long eventId = 0;
             _expClient.CreateEventIfNotExists(opEvent, out eventId);
 
@@ -107,7 +108,7 @@ namespace EPiServer.Marketing.Testing.Dal
                 Scope = "visitor",
                 Aggregator = "unique",
                 WinningDirection = "increasing",
-                DisplayTitle = eventNameEnding
+                DisplayTitle = eventName
             };
             List<Metric> metricLists = new List<Metric>();
             metricLists.Add(metric);
@@ -185,8 +186,8 @@ namespace EPiServer.Marketing.Testing.Dal
         {
             var options = ServiceLocator.Current.GetInstance<IOptions<FullStackSettings>>();
             _restOptions = new ExperimentationRestApiOptions();
-            _restOptions.RestAuthToken = options.Value.RestAuthToken; // "2:Eak6r97y47wUuJWa3ULSHcAWCqLM4OiT0gPe1PswoYKD5QZ0XwoY";
-            _restOptions.ProjectId = options.Value.ProjectId; // "21972070188";
+            _restOptions.RestAuthToken = options.Value.RestAuthToken;
+            _restOptions.ProjectId = options.Value.ProjectId; 
             _restOptions.VersionId = options.Value.APIVersion;
             _restOptions.Environment = options.Value.EnviromentKey;
             _restOptions.FlagKey = flagKey;

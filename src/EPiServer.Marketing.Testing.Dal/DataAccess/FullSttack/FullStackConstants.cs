@@ -35,6 +35,13 @@ namespace EPiServer.Marketing.Testing.Dal.DataAccess.FullSttack
             return objTitle.Replace(" ", "_").Replace("/", "") + "_Experiment";
         }
 
+        public static string GetEventName(string flagName)
+        {
+            string EventNameReturn = string.Empty;
+            EventNameReturn = EventName + "_" + flagName.Replace(ReplaceExperimentFlag, "");
+            return EventNameReturn;
+        }
+
         public static string ContentGUIDKey = "content_guid";
 
         public static string ContentGUIDDesc = "Guid of content";

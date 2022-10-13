@@ -523,7 +523,7 @@ namespace EPiServer.Marketing.Testing.Web.Repositories
                 var pageViewEventName = string.Empty;
                 if (currentTest != null)
                 {
-                    pageViewEventName = FullStackConstants.EventName + currentTest.FS_FlagKey.Replace(FullStackConstants.ReplaceExperimentFlag, "");
+                    pageViewEventName = FullStackConstants.GetEventName(currentTest.FS_FlagKey);
                 }
 
                 _fsSDKClient.Service.TrackPageViewEvent(pageViewEventName, itemVersion);
