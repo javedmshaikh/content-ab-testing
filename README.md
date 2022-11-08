@@ -72,5 +72,5 @@ services.Configure<FullStackSettings>(_configuration.GetSection("full-stack"));
 ## Experimentation Results
 Experimentation Results is shown in CMS AB Test view as below
 
-![Screenshot2](images/Screenshot2.png?raw=true "Screenshot2")
+![image](https://user-images.githubusercontent.com/16465622/200676280-c89cfac6-ffed-4290-bbc4-5021ce63611e.png)
 
