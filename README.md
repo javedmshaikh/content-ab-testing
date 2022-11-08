@@ -1,30 +1,34 @@
-# CMS AB Testing  & Optimizely Full Stack Integration
+# CMS AB Testing  & Optimizely Feature Experimentation Integration
 
-This version of CMS AB Testing connects to Optimizely Full Stack and creates A/B Testing experimentation in Full Stack. When a conversion is made, Metrics is also updated in Full Stack. Results of Metrics is displayed from Full Stack into AB Test view within CMS.
+This version of CMS AB Experimentation connects to Optimizely Feature Experimentation and creates A/B Experiment  in Feature Experimentation. Currently it supports only "Page View" metrics, when a user lands on experiment page and conversion is made, "Page View" metrics is also updated in Feature Expeimenation. Results of Metrics is displayed from Feature Experimentation into "CMS AB Expeirment" view within CMS.
 
-## Start AB Test (Experiment) in CMS
-Test is created in Full Stack with Experimentation. Event with page title is created to track Metrics.
+Below is the sequence of events that happens in CMS and its respective effect in Feature Experiment Backend.
 
-## User Lands on AB Test (Experiment) Page in CMS
-When user lands on AB Test page of CMS, Page Tracking event is called passing user context. User is assigned either variation A (ON) or variation B (OFF) version of the test page. 
+## Start AB Experiment in CMS
+Test is created in Full Stack with Experimentation. "Page View" Event with page title is created to track Metrics. This is implemented by invoking Feature Expeirmentation Rest API
+
+## User Lands on AB Experiment Page in CMS
+When user lands on Experiment page of CMS, Feature experiment SDK is used to make decission by passing user context. User is assigned either variation A (ON = New Draft Page) or variation B (OFF = Current Published Page) version of the CMS Page. 
 
 * Variation “On” maps to New Draft version of AB Test Page.
 * Variation “Off” maps to Current Published version of AB Test Page.
 
 ## User navigates to conversion page in CMS
-When same user navigates to conversion page from AB Test page, Experimentation decision is made and is logged in Metrics in experimentation results. Same Metrics is visible from within CMS.
+When same user navigates to conversion page from experimentat page, experimentation decision is made and is logged in Page View Metrics in experimentation results. Metrics Results is also visible from within CMS by viewing current ongoing experiment on the page.
 
 ## Abort AB Test (Experiment)
-When Test is aborted, it is deleted from CMS and Experimentation is switched off in Optimizely Full Stack.
+When Test is aborted, it is deleted from CMS and Experimentation is switched off in Optimizely Feature Experimentation.
 
 ## Publish Winner
-When winner is selected, selected version of page is published in CMS and experimentation is switched off in Optimizely Full Stack.
+When winner is selected, selected version of page is published in CMS and experimentation is switched off in Optimizely Feature Experimentation.
  
 ## Installation Steps
 Required Packages in CMS content cloud for Optimizely Full Stack Integration to Work
-* Research.Marketing.Experimentation (Version 1.0.0)
+* Research.Marketing.Experimentation latest version (Current Version 0.2.1)
 * RestSharp (Version 108.0.1)
-Configuration Changes
+* Optimizely SDK
+
+## Configuration Changes
 Add below configuration changes in AppSettings.json in root in your Content Cloud Project
 
 ```
@@ -32,9 +36,9 @@ Add below configuration changes in AppSettings.json in root in your Content Clou
     "ProjectId": "21972070188",
     "APIVersion": 1,
     "EnviromentKey": "production",
-    "SDKKey": "",
+    "SDKKey": "", //Get SDK key from app.optimizely.com
     "CacheInMinutes": 20,
-    "RestAuthToken": "",
+    "RestAuthToken": "", //Get Rest API Key from app.optimizely.com
     "EventName": "page_view",
     "EventDescription": "Event to calculate page view metrics"
   }
