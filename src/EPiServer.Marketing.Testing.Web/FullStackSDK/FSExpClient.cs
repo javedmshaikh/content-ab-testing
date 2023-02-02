@@ -9,7 +9,7 @@ using System.Configuration;
 
 namespace EPiServer.Marketing.Testing.Web.FullStackSDK
 {
-    internal static class FSExpClient
+    public static class FSExpClient
     {
         internal static Lazy<Optimizely> Get = new Lazy<Optimizely>(() => GenerateClient());
 
